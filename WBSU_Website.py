@@ -29,7 +29,7 @@ ZIP_FILENAMES = [
 GITHUB_RAW_ZIP_BASE = "https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
-# --- 2. SESSION STATE FOR MENU, PAGE & THEME ---
+# --- 2. SESSION STATE ---
 if "menu_expanded" not in st.session_state:
     st.session_state.menu_expanded = False
 
@@ -40,41 +40,41 @@ if "ui_theme" not in st.session_state:
     st.session_state.ui_theme = "Sky Light"
 
 LIGHT_PALETTE = """
-    --bg-gradient: linear-gradient(160deg, #cce6ff 0%, #e5f2ff 52%, #d2e9ff 100%);
+    --bg-gradient: linear-gradient(160deg, #cbe6ff 0%, #e5f2ff 52%, #cfe8ff 100%);
     --card-bg: #f5faff;
-    --card-border: #82bff5;
-    --contact-bg: #bfe0ff;
-    --contact-border: #3f91db;
-    --contact-accent: #084275;
-    --text-main: #09223b;
-    --text-muted: #285078;
-    --accent: #1261b5;
-    --accent-soft: #cbe4ff;
-    --menu-btn-bg: #0c477a;
-    --menu-btn-hover: #1662a3;
+    --card-border: #7cbaf2;
+    --contact-bg: #b8dcff;
+    --contact-border: #3788d4;
+    --contact-accent: #073f70;
+    --text-main: #082038;
+    --text-muted: #244b73;
+    --accent: #105eb3;
+    --accent-soft: #c7e2ff;
+    --menu-btn-bg: #0a4475;
+    --menu-btn-hover: #145e9e;
     --menu-btn-text: #ffffff;
-    --overlay-bg: #eef7ff;
+    --overlay-bg: #edf6ff;
     --banner-grad: linear-gradient(120deg, #0b335e 0%, #155391 58%, #1f70bd 100%);
-    --shadow-soft: 0 8px 22px rgba(9, 34, 59, 0.10);
+    --shadow-soft: 0 8px 22px rgba(8, 32, 56, 0.12);
 """
 
 DARK_PALETTE = """
-    --bg-gradient: linear-gradient(160deg, #051121 0%, #091b33 52%, #061426 100%);
-    --card-bg: #0f2947;
-    --card-border: #2b5d94;
-    --contact-bg: #153961;
-    --contact-border: #4789cf;
+    --bg-gradient: linear-gradient(160deg, #040e1c 0%, #081930 52%, #051224 100%);
+    --card-bg: #0e2744;
+    --card-border: #2a5c94;
+    --contact-bg: #14375e;
+    --contact-border: #4688cf;
     --contact-accent: #8ccbff;
-    --text-main: #eaf4ff;
-    --text-muted: #a9cbed;
+    --text-main: #ebf5ff;
+    --text-muted: #a6c9eb;
     --accent: #66b5ff;
     --accent-soft: #16375c;
-    --menu-btn-bg: #1c5a9c;
-    --menu-btn-hover: #2972bf;
+    --menu-btn-bg: #1b5899;
+    --menu-btn-hover: #286fbd;
     --menu-btn-text: #ffffff;
-    --overlay-bg: #0d2440;
-    --banner-grad: linear-gradient(120deg, #040e1c 0%, #0b2645 58%, #133b69 100%);
-    --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.45);
+    --overlay-bg: #0c223d;
+    --banner-grad: linear-gradient(120deg, #040d1a 0%, #0b2645 58%, #133b69 100%);
+    --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.50);
 """
 
 active_vars = DARK_PALETTE if st.session_state.ui_theme == "Deep Dark" else LIGHT_PALETTE
@@ -91,32 +91,62 @@ st.markdown(
             display: none !important;
         }}
 
+        /* Force full-screen theme gradient & font colors across Streamlit wrappers */
+        html, body,
         .stApp,
         [data-testid="stAppViewContainer"],
+        [data-testid="stAppViewContainer"] > .main,
+        [data-testid="stAppViewContainer"] > .main > .block-container,
         [data-testid="stHeader"],
         [data-testid="stToolbar"],
         [data-testid="stDecoration"] {{
             background: var(--bg-gradient) !important;
+            background-color: transparent !important;
             color: var(--text-main) !important;
         }}
 
-        .stApp *,
-        [data-testid="stMarkdownContainer"] *,
-        [data-testid="stWidgetLabel"] *,
-        [data-testid="stRadio"] * {{
-            color: var(--text-main);
-        }}
-
-        h1, h2, h3, h4, h5, h6 {{
+        .stApp [data-testid="stMarkdownContainer"] p,
+        .stApp [data-testid="stMarkdownContainer"] li,
+        .stApp [data-testid="stMarkdownContainer"] h1,
+        .stApp [data-testid="stMarkdownContainer"] h2,
+        .stApp [data-testid="stMarkdownContainer"] h3,
+        .stApp [data-testid="stMarkdownContainer"] h4,
+        .stApp [data-testid="stMarkdownContainer"] span,
+        .stApp [data-testid="stMarkdownContainer"] strong,
+        .stApp [data-testid="stWidgetLabel"] label,
+        .stApp [data-testid="stRadio"] label p,
+        .stApp [data-testid="stRadio"] label span {{
             color: var(--text-main) !important;
         }}
 
-        /* Tiny top-right toggle button with 10px padding */
+        /* Compact floating top-right MENU button (< / >) with 10px padding */
+        .wbsu-top-menu-btn {{
+            position: fixed;
+            top: 12px;
+            right: 16px;
+            z-index: 999999;
+            background-color: var(--menu-btn-bg);
+            color: var(--menu-btn-text);
+            border: 1.5px solid var(--card-border);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+        }}
+
+        .wbsu-top-menu-btn:hover {{
+            background-color: var(--menu-btn-hover);
+        }}
+
+        /* Style the Streamlit toggle button itself if used */
         .st-key-menu_toggle_btn {{
             position: fixed !important;
-            top: 14px !important;
-            right: 18px !important;
-            z-index: 10001 !important;
+            top: 52px !important;
+            right: 16px !important;
+            z-index: 999998 !important;
             width: auto !important;
             min-width: 0 !important;
         }}
@@ -127,7 +157,6 @@ st.markdown(
             border: 1.5px solid var(--card-border) !important;
             border-radius: 8px !important;
             padding: 10px !important;
-            margin: 0 !important;
             font-size: 0.78rem !important;
             font-weight: 800 !important;
             line-height: 1 !important;
@@ -138,32 +167,24 @@ st.markdown(
             box-shadow: var(--shadow-soft) !important;
         }}
 
-        .st-key-menu_toggle_btn button p,
-        .st-key-menu_toggle_btn button span,
-        .st-key-menu_toggle_btn button div {{
+        .st-key-menu_toggle_btn button * {{
             color: var(--menu-btn-text) !important;
             padding: 0 !important;
             margin: 0 !important;
-            font-size: 0.78rem !important;
-            line-height: 1 !important;
-        }}
-
-        .st-key-menu_toggle_btn button:hover {{
-            background-color: var(--menu-btn-hover) !important;
         }}
 
         /* Floating overlay box over current page content */
         .st-key-menu_overlay_container {{
             position: fixed !important;
-            top: 56px !important;
-            right: 18px !important;
-            width: 240px !important;
-            z-index: 10000 !important;
+            top: 98px !important;
+            right: 16px !important;
+            width: 235px !important;
+            z-index: 999997 !important;
             background: var(--overlay-bg) !important;
             border: 1.5px solid var(--card-border) !important;
             border-radius: 14px !important;
             padding: 14px 16px !important;
-            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32) !important;
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35) !important;
         }}
 
         /* Zoology & Auto-Scroll Animations */
