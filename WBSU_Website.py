@@ -13,7 +13,22 @@ st.set_page_config(
     layout="wide",
 )
 
-# --- 1. BLUE-TINT + DEVICE LIGHT/DARK + ZOOLOGY ANIMATIONS & GRAPHICS ---
+# --- 1. REPO & FILE PATHS ---
+BASE_DIR = Path(__file__).resolve().parent
+IMAGES_ZIP_DIR = BASE_DIR / "Images"
+EXTRACTED_IMG_DIR = BASE_DIR / "extracted_images"
+PDF_DIR = BASE_DIR / "pdfs"
+
+ZIP_FILENAMES = [
+    "WhatsApp Unknown 2026-11-18 at 13.03.39.zip",
+    "WhatsApp Unknown 2026-11-18 at 13.03.45.zip",
+    "WhatsApp Unknown 2026-11-18 at 13.03.49.zip",
+]
+
+GITHUB_RAW_ZIP_BASE = "https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images"
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
+
+# --- 2. BLUE-TINT + DEVICE LIGHT/DARK + ZOOLOGY ANIMATIONS & GRAPHICS ---
 st.markdown(
     """
     <style>
@@ -53,7 +68,6 @@ st.markdown(
             color: var(--text-main);
         }
 
-        /* Subtle Zoology Keyframe Animations */
         @keyframes floatSpecimen {
             0%, 100% {
                 transform: translateY(0px) rotate(0deg);
@@ -188,10 +202,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# --- 2. ZOOLOGY SVG GRAPHICS ---
+# --- 3. ZOOLOGY SVG GRAPHICS ---
 ZOOLOGY_HEADER_SVG = """
 <svg width="92" height="64" viewBox="0 0 92 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="zoo-float" aria-label="Zoology emblem">
-  <!-- Stylized butterfly / wing specimen motif -->
   <path d="M46 32C36 16 14 10 10 24C7 34 22 40 46 32Z" fill="#7CC4FA" fill-opacity="0.35" stroke="#BDE0FE" stroke-width="2"/>
   <path d="M46 32C56 16 78 10 82 24C85 34 70 40 46 32Z" fill="#7CC4FA" fill-opacity="0.35" stroke="#BDE0FE" stroke-width="2"/>
   <path d="M46 32C34 34 20 44 26 53C31 60 42 48 46 32Z" fill="#4EA8DE" fill-opacity="0.4" stroke="#90E0EF" stroke-width="2"/>
@@ -211,7 +224,6 @@ ZOOLOGY_RIBBON_SVG = """
     <circle cx="14" cy="14" r="4" fill="currentColor"/>
   </svg>
   <svg width="160" height="26" viewBox="0 0 160 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Subtle DNA / taxonomic wave graphic -->
     <path d="M4 13C24 2 44 24 64 13C84 2 104 24 124 13C136 6 146 10 156 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.75"/>
     <path d="M4 13C24 24 44 2 64 13C84 24 104 2 124 13C136 20 146 16 156 13" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" stroke-linecap="round" opacity="0.55"/>
   </svg>
@@ -234,32 +246,18 @@ def render_zoo_divider(label: str):
     )
 
 
-# --- 3. ZIP FILES CONFIGURATION ---
-ZIP_FILENAMES = [
-    "WhatsApp Unknown 2026-11-18 at 13.03.49.zip",
-    "WhatsApp Unknown 2026-11-18 at 13.03.45.zip",
-    "WhatsApp Unknown 2026-11-18 at 13.03.39.zip",
-]
-
-LOCAL_ZIP_DIR = Path("zips")
-EXTRACTED_IMG_DIR = Path("extracted_images")
-GITHUB_RAW_ZIP_BASE = "https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images"
-IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
-
-
-@st.cache_data(show_spinner="Extracting specimen & event images from ZIP archives...")
+# --- 4. ZIP EXTRACTION HELPER ---
+@st.cache_data(show_spinner="Extracting images from ZIP files in Images/...")
 def extract_images_from_zips(zip_names: list[str], use_github_fallback: bool = True) -> list[str]:
     EXTRACTED_IMG_DIR.mkdir(parents=True, exist_ok=True)
     found_images: list[str] = []
 
     for zname in zip_names:
         zip_bytes: bytes | None = None
-        for candidate in [LOCAL_ZIP_DIR / zname, Path("Images") / zname, Path(zname)]:
-            if candidate.exists():
-                zip_bytes = candidate.read_bytes()
-                break
-
-        if zip_bytes is None and use_github_fallback:
+        local_candidate = IMAGES_ZIP_DIR / zname
+        if local_candidate.exists():
+            zip_bytes = local_candidate.read_bytes()
+        elif use_github_fallback:
             encoded_name = urllib.parse.quote(zname)
             url = f"{GITHUB_RAW_ZIP_BASE}/{encoded_name}"
             try:
@@ -291,7 +289,7 @@ def extract_images_from_zips(zip_names: list[str], use_github_fallback: bool = T
     return sorted(found_images)
 
 
-# --- 4. WEBSITE DATA ---
+# --- 5. WEBSITE DATA ---
 COMMITTEE_MEMBERS = [
     {"role": "President", "name": "Dr. Anirban Sen", "email": "president@alumniassoc.org"},
     {"role": "Vice President", "name": "Smt. Gargi Mukherjee", "email": "vp@alumniassoc.org"},
@@ -300,10 +298,10 @@ COMMITTEE_MEMBERS = [
 ]
 
 ALUMNI_PDFS = [
-    {"year": "Batch of 2020", "file": "pdfs/alumni_2020.pdf"},
-    {"year": "Batch of 2021", "file": "pdfs/alumni_2021.pdf"},
-    {"year": "Batch of 2022", "file": "pdfs/alumni_2022.pdf"},
-    {"year": "Batch of 2023", "file": "pdfs/alumni_2023.pdf"},
+    {"year": "Batch of 2020", "file": PDF_DIR / "alumni_2020.pdf"},
+    {"year": "Batch of 2021", "file": PDF_DIR / "alumni_2021.pdf"},
+    {"year": "Batch of 2022", "file": PDF_DIR / "alumni_2022.pdf"},
+    {"year": "Batch of 2023", "file": PDF_DIR / "alumni_2023.pdf"},
 ]
 
 NOTABLE_ALUMNI = [
@@ -360,7 +358,7 @@ CONTACT_INFO = {
     "email": "contact@alumniassoc.org",
 }
 
-# --- 5. HEADER & NAVIGATION ---
+# --- 6. HEADER & NAVIGATION ---
 st.markdown(
     f"""
     <div class="top-nav-banner">
@@ -380,7 +378,7 @@ page = st.sidebar.radio(
     ["Cover Page", "Alumni Corner", "Events", "Support Us", "ZIP Image Mapper"],
 )
 
-use_gh = st.sidebar.checkbox("Fetch ZIPs from GitHub if not local", value=True)
+use_gh = st.sidebar.checkbox("Fetch ZIPs from GitHub if not in Images/", value=True)
 all_extracted_imgs = extract_images_from_zips(ZIP_FILENAMES, use_github_fallback=use_gh)
 st.sidebar.caption(f"Extracted images found: {len(all_extracted_imgs)}")
 
@@ -427,7 +425,7 @@ def render_footer():
         )
 
 
-# --- 6. PAGES ---
+# --- 7. PAGES ---
 if page == "Cover Page":
     slides = [p for p in st.session_state.img_map["slides"] if p and os.path.exists(p)]
     auto_slide = st.sidebar.checkbox("Auto-play slideshow", value=False)
@@ -445,7 +443,7 @@ if page == "Cover Page":
             with slot.container():
                 st.image(slides[s_idx - 1], caption=f"Field & Campus Highlight {s_idx} of {len(slides)}", use_container_width=True)
     else:
-        st.info("Add the ZIP files to `Images/` or `zips/` and pick slideshow images in **ZIP Image Mapper**.")
+        st.info("Keep the ZIP files inside `Images/` and pick slideshow photos in **ZIP Image Mapper**.")
 
     render_zoo_divider("Who Are We & Our Vision")
     c1, c2 = st.columns(2)
@@ -515,23 +513,24 @@ elif page == "Alumni Corner":
     render_zoo_divider("Year-by-Year Alumni Directory (PDF)")
     p_cols = st.columns(2)
     for idx, item in enumerate(ALUMNI_PDFS):
+        pdf_path: Path = item["file"]
         with p_cols[idx % 2]:
             st.markdown(
                 f'<div class="blue-card"><strong>{item["year"]}</strong><br>'
                 f'<span class="muted-text">Student Names &amp; Email IDs</span></div>',
                 unsafe_allow_html=True,
             )
-            if os.path.exists(item["file"]):
-                with open(item["file"], "rb") as f:
+            if pdf_path.exists():
+                with open(pdf_path, "rb") as f:
                     st.download_button(
                         label=f"Download {item['year']} PDF",
                         data=f.read(),
-                        file_name=os.path.basename(item["file"]),
+                        file_name=pdf_path.name,
                         mime="application/pdf",
                         key=f"dl_{idx}",
                     )
             else:
-                st.caption(f"Add `{item['file']}` to enable download.")
+                st.caption(f"Add `{pdf_path.relative_to(BASE_DIR)}` to enable download.")
 
     render_footer()
 
@@ -577,7 +576,7 @@ elif page == "Support Us":
 elif page == "ZIP Image Mapper":
     st.header("Assign Extracted ZIP Images")
     if not all_extracted_imgs:
-        st.warning("No images extracted yet. Place `.zip` files in `Images/` or `zips/` and push to GitHub.")
+        st.warning("No images extracted yet. Keep `.zip` files inside `Images/` and push to GitHub.")
         st.stop()
 
     options = all_extracted_imgs
