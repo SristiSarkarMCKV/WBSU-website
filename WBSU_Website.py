@@ -29,49 +29,52 @@ ZIP_FILENAMES = [
 GITHUB_RAW_ZIP_BASE = "https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
-# --- 2. THEME VARIABLES (LIGHT DEFAULT + DARK MODE ADAPTIVE) ---
+# --- 2. SKY-BLUE LIGHT TINT <-> RECIPROCAL DARK TINT + OVERLAY MENU ---
 st.markdown(
     """
     <style>
         :root {
-            --bg-gradient: radial-gradient(circle at 12% 15%, #dcebfa 0%, #eef5fc 48%, #e4effb 100%);
-            --card-bg: rgba(247, 250, 255, 0.95);
-            --card-border: #b8d4f0;
-            --contact-bg: rgba(214, 234, 252, 0.96);
-            --contact-border: #6ba3d6;
-            --contact-accent: #0f4c81;
-            --text-main: #0f2942;
-            --text-muted: #35587a;
-            --accent: #1d5fa7;
-            --accent-soft: #dcebfa;
-            --menu-bg: #123c69;
-            --menu-hover: #1d5fa7;
-            --menu-text: #f3f9ff;
-            --banner-grad: linear-gradient(120deg, #0d2b4d 0%, #174b82 55%, #1f68b0 100%);
-            --shadow-soft: 0 8px 24px rgba(15, 41, 66, 0.08);
+            /* Light Mode: Sky Blue Tint */
+            --bg-gradient: linear-gradient(160deg, #cfe8ff 0%, #e6f3ff 52%, #d6ecff 100%);
+            --card-bg: rgba(242, 250, 255, 0.94);
+            --card-border: #8ec5f5;
+            --contact-bg: rgba(196, 228, 255, 0.96);
+            --contact-border: #4d9de0;
+            --contact-accent: #0b4a82;
+            --text-main: #0b2540;
+            --text-muted: #2d567d;
+            --accent: #1464b8;
+            --accent-soft: #cde6ff;
+            --menu-btn-bg: #0f4c81;
+            --menu-btn-hover: #1866ab;
+            --menu-btn-text: #ffffff;
+            --overlay-bg: rgba(235, 247, 255, 0.98);
+            --banner-grad: linear-gradient(120deg, #0c3561 0%, #165696 58%, #2074c4 100%);
+            --shadow-soft: 0 8px 24px rgba(11, 37, 64, 0.10);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-gradient: radial-gradient(circle at 15% 12%, #112742 0%, #091320 52%, #07101b 100%);
-                --card-bg: rgba(16, 33, 54, 0.94);
-                --card-border: #23466d;
-                --contact-bg: rgba(13, 41, 68, 0.96);
-                --contact-border: #3b7ab8;
-                --contact-accent: #7cc4fa;
-                --text-main: #e8f3ff;
-                --text-muted: #a6c7e6;
-                --accent: #58a6ff;
-                --accent-soft: #173252;
-                --menu-bg: #184270;
-                --menu-hover: #255d9c;
-                --menu-text: #eef6ff;
-                --banner-grad: linear-gradient(120deg, #071628 0%, #102d4e 55%, #184270 100%);
-                --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.38);
+                /* Dark Mode: Reciprocal Deep Midnight Blue Tint */
+                --bg-gradient: linear-gradient(160deg, #061324 0%, #0a1e36 52%, #071629 100%);
+                --card-bg: rgba(12, 31, 54, 0.95);
+                --card-border: #28578a;
+                --contact-bg: rgba(16, 44, 74, 0.96);
+                --contact-border: #3d7ec2;
+                --contact-accent: #82c7ff;
+                --text-main: #e8f4ff;
+                --text-muted: #a6c9eb;
+                --accent: #63b3ff;
+                --accent-soft: #17385e;
+                --menu-btn-bg: #1b5694;
+                --menu-btn-hover: #286eb8;
+                --menu-btn-text: #ffffff;
+                --overlay-bg: rgba(10, 27, 48, 0.98);
+                --banner-grad: linear-gradient(120deg, #051120 0%, #0d2b4d 58%, #154170 100%);
+                --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.45);
             }
         }
 
-        /* Hide default Streamlit sidebar so top-right menu controls navigation cleanly */
         [data-testid="stSidebar"],
         [data-testid="stSidebarCollapseButton"] {
             display: none !important;
@@ -84,44 +87,71 @@ st.markdown(
             color: var(--text-main) !important;
         }
 
-        [data-testid="stMarkdownContainer"] p,
-        [data-testid="stMarkdownContainer"] li,
-        [data-testid="stMarkdownContainer"] h1,
-        [data-testid="stMarkdownContainer"] h2,
-        [data-testid="stMarkdownContainer"] h3,
-        [data-testid="stMarkdownContainer"] h4,
-        [data-testid="stMarkdownContainer"] span,
-        [data-testid="stMarkdownContainer"] strong,
-        [data-testid="stWidgetLabel"] label,
-        [data-testid="stRadio"] label p,
-        [data-testid="stCaptionContainer"] {
+        .stApp,
+        .stApp p,
+        .stApp span,
+        .stApp div,
+        .stApp label,
+        .stApp li,
+        [data-testid="stMarkdownContainer"],
+        [data-testid="stMarkdownContainer"] * {
+            color: var(--text-main);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
             color: var(--text-main) !important;
         }
 
-        /* Top-right menu panel & buttons */
-        .top-right-nav-box {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 12px 16px;
-            margin-bottom: 14px;
-            box-shadow: var(--shadow-soft);
+        /* Compact top-right MENU button with 10px padding and crisp visible text */
+        .st-key-menu_toggle_btn {
+            position: fixed !important;
+            top: 16px !important;
+            right: 22px !important;
+            z-index: 10000 !important;
+            width: auto !important;
         }
 
-        div[data-testid="stButton"] > button {
-            background-color: var(--menu-bg) !important;
-            color: var(--menu-text) !important;
-            border: 1px solid var(--card-border) !important;
+        .st-key-menu_toggle_btn button,
+        .st-key-menu_toggle_btn button *,
+        div[data-testid="stButton"] > button[kind="secondary"] {
+            background-color: var(--menu-btn-bg) !important;
+            color: var(--menu-btn-text) !important;
+            border: 1.5px solid var(--card-border) !important;
             border-radius: 10px !important;
-            font-weight: 700 !important;
-            letter-spacing: 0.04em !important;
-            padding: 0.45rem 0.9rem !important;
-            transition: transform 0.2s ease, background-color 0.2s ease !important;
+            padding: 10px !important;
+            font-size: 0.85rem !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
+            min-height: 0 !important;
+            height: auto !important;
+            width: auto !important;
+            box-shadow: var(--shadow-soft) !important;
+            cursor: pointer !important;
         }
 
-        div[data-testid="stButton"] > button:hover {
-            background-color: var(--menu-hover) !important;
-            transform: translateY(-1px);
+        .st-key-menu_toggle_btn button:hover {
+            background-color: var(--menu-btn-hover) !important;
+            color: var(--menu-btn-text) !important;
+        }
+
+        /* Floating overlay panel over current page content when expanded */
+        .st-key-menu_overlay_container {
+            position: fixed !important;
+            top: 62px !important;
+            right: 22px !important;
+            width: 245px !important;
+            z-index: 9999 !important;
+            background: var(--overlay-bg) !important;
+            border: 1.5px solid var(--card-border) !important;
+            border-radius: 14px !important;
+            padding: 14px 16px !important;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28) !important;
+        }
+
+        .st-key-menu_overlay_container label,
+        .st-key-menu_overlay_container span,
+        .st-key-menu_overlay_container p {
+            color: var(--text-main) !important;
         }
 
         /* Zoology & Auto-Scroll Animations */
@@ -182,7 +212,7 @@ st.markdown(
         }
 
         .top-nav-banner {
-            background: var(--banner-grad);
+            background: var(--banner-grad) !important;
             border: 1px solid var(--card-border);
             border-radius: 16px;
             padding: 18px 24px;
@@ -198,7 +228,7 @@ st.markdown(
         .top-nav-banner h2,
         .top-nav-banner p,
         .top-nav-banner span {
-            color: #f2f8ff !important;
+            color: #f4faff !important;
             margin: 0;
         }
 
@@ -207,7 +237,7 @@ st.markdown(
             overflow: hidden;
             border-radius: 16px;
             border: 1px solid var(--card-border);
-            background-color: var(--card-bg);
+            background-color: var(--card-bg) !important;
             box-shadow: var(--shadow-soft);
             padding: 14px 0;
             margin-bottom: 16px;
@@ -244,13 +274,13 @@ st.markdown(
         }
 
         .blue-card {
-            background-color: var(--card-bg);
+            background-color: var(--card-bg) !important;
             border: 1px solid var(--card-border);
             border-left: 4px solid var(--accent);
             border-radius: 14px;
             padding: 18px 20px;
             margin-bottom: 14px;
-            color: var(--text-main);
+            color: var(--text-main) !important;
             box-shadow: var(--shadow-soft);
             transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
             animation: fadeSlideUp 0.45s ease-out both;
@@ -274,13 +304,13 @@ st.markdown(
 
         /* Distinct colour styling for the Contact section */
         .contact-card {
-            background-color: var(--contact-bg);
+            background-color: var(--contact-bg) !important;
             border: 1.5px solid var(--contact-border);
             border-top: 5px solid var(--contact-accent);
             border-radius: 14px;
             padding: 18px 20px;
             margin-bottom: 14px;
-            color: var(--text-main);
+            color: var(--text-main) !important;
             box-shadow: var(--shadow-soft);
             transition: transform 0.25s ease, border-color 0.25s ease;
             animation: fadeSlideUp 0.45s ease-out both;
@@ -306,7 +336,7 @@ st.markdown(
 
         .role-badge {
             display: inline-block;
-            background-color: var(--accent-soft);
+            background-color: var(--accent-soft) !important;
             color: var(--accent) !important;
             font-weight: 700;
             font-size: 0.76rem;
@@ -533,24 +563,23 @@ CONTACT_INFO = {
     "email": "contact@alumniassoc.org",
 }
 
-# --- 6. TOP-RIGHT EXPANDABLE / RETRACTABLE MENU ---
+# --- 6. TOP-RIGHT OVERLAY MENU TOGGLE ---
 if "menu_expanded" not in st.session_state:
     st.session_state.menu_expanded = False
 
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Cover Page"
 
-top_spacer, top_menu_col = st.columns([5.5, 2.5])
-with top_menu_col:
-    btn_label = "MENU>" if st.session_state.menu_expanded else "<MENU "
-    if st.button(btn_label, key="menu_toggle_btn", use_container_width=True):
-        st.session_state.menu_expanded = not st.session_state.menu_expanded
-        st.rerun()
+btn_label = "MENU>" if st.session_state.menu_expanded else "<MENU "
+if st.button(btn_label, key="menu_toggle_btn"):
+    st.session_state.menu_expanded = not st.session_state.menu_expanded
+    st.rerun()
 
-    if st.session_state.menu_expanded:
-        st.markdown('<div class="top-right-nav-box">', unsafe_allow_html=True)
+if st.session_state.menu_expanded:
+    with st.container(key="menu_overlay_container"):
+        st.markdown("**Navigation**")
         selected_page = st.radio(
-            "Navigate",
+            "Go to",
             ["Cover Page", "Alumni Corner", "Events", "Support Us"],
             index=["Cover Page", "Alumni Corner", "Events", "Support Us"].index(st.session_state.current_page),
             key="top_right_nav_radio",
@@ -558,7 +587,6 @@ with top_menu_col:
         if selected_page != st.session_state.current_page:
             st.session_state.current_page = selected_page
             st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
 
 page = st.session_state.current_page
 
