@@ -1,6 +1,6 @@
+import base64
 import io
-import os
-import time
+import mimetypes
 import urllib.parse
 import urllib.request
 import zipfile
@@ -26,9 +26,9 @@ ZIP_FILENAMES = [
 ]
 
 GITHUB_RAW_ZIP_BASE = "https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images"
-IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
-# --- 2. BLUE-TINT + DEVICE LIGHT/DARK + ZOOLOGY ANIMATIONS & GRAPHICS ---
+# --- 2. BLUE-TINT + DEVICE LIGHT/DARK + ZOOLOGY & AUTO-SCROLL ANIMATIONS ---
 st.markdown(
     """
     <style>
@@ -40,7 +40,6 @@ st.markdown(
             --text-main: #0f2942;
             --text-muted: #3b5b7a;
             --accent: #1d5fa7;
-            --accent-hover: #144882;
             --accent-soft: #dcebfa;
             --banner-grad: linear-gradient(120deg, #0d2b4d 0%, #174b82 55%, #1f68b0 100%);
             --shadow-soft: 0 8px 24px rgba(15, 41, 66, 0.08);
@@ -55,7 +54,6 @@ st.markdown(
                 --text-main: #e6f1fc;
                 --text-muted: #9ec0e0;
                 --accent: #58a6ff;
-                --accent-hover: #79b8ff;
                 --accent-soft: #173252;
                 --banner-grad: linear-gradient(120deg, #071628 0%, #102d4e 55%, #184270 100%);
                 --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.35);
@@ -99,8 +97,18 @@ st.markdown(
             }
         }
 
+        /* Continuous horizontal auto-scroll across the screen */
+        @keyframes scrollAcrossScreen {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
-            .zoo-float, .zoo-pulse, .blue-card, .top-nav-banner {
+            .zoo-float, .zoo-pulse, .blue-card, .top-nav-banner, .auto-scroll-track {
                 animation: none !important;
                 transition: none !important;
             }
@@ -134,6 +142,45 @@ st.markdown(
         .top-nav-banner span {
             color: #f2f8ff !important;
             margin: 0;
+        }
+
+        .auto-scroll-wrapper {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-soft);
+            padding: 14px 0;
+            margin-bottom: 16px;
+        }
+
+        .auto-scroll-track {
+            display: flex;
+            width: max-content;
+            gap: 16px;
+            animation: scrollAcrossScreen 36s linear infinite;
+        }
+
+        .auto-scroll-wrapper:hover .auto-scroll-track {
+            animation-play-state: paused;
+        }
+
+        .scroll-slide-card {
+            flex: 0 0 auto;
+            width: 310px;
+            height: 215px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            background: var(--accent-soft);
+        }
+
+        .scroll-slide-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .blue-card {
@@ -246,9 +293,9 @@ def render_zoo_divider(label: str):
     )
 
 
-# --- 4. ZIP EXTRACTION HELPER ---
-@st.cache_data(show_spinner="Extracting images from ZIP files in Images/...")
-def extract_images_from_zips(zip_names: list[str], use_github_fallback: bool = True) -> list[str]:
+# --- 4. ZIP EXTRACTION & AUTO-SCROLL STRIP ---
+@st.cache_data(show_spinner="Extracting images from all ZIP archives...")
+def extract_all_zip_images(zip_names: list[str], use_github_fallback: bool = True) -> list[str]:
     EXTRACTED_IMG_DIR.mkdir(parents=True, exist_ok=True)
     found_images: list[str] = []
 
@@ -289,7 +336,48 @@ def extract_images_from_zips(zip_names: list[str], use_github_fallback: bool = T
     return sorted(found_images)
 
 
-# --- 5. WEBSITE DATA ---
+def _image_to_data_uri(img_path: str) -> str | None:
+    p = Path(img_path)
+    if not p.exists():
+        return None
+    mime_type, _ = mimetypes.guess_type(p.name)
+    if not mime_type:
+        mime_type = "image/jpeg"
+    encoded = base64.b64encode(p.read_bytes()).decode("ascii")
+    return f"data:{mime_type};base64,{encoded}"
+
+
+def render_auto_scrolling_gallery(image_paths: list[str]):
+    valid_uris = []
+    for path in image_paths:
+        uri = _image_to_data_uri(path)
+        if uri:
+            valid_uris.append((uri, Path(path).name))
+
+    if not valid_uris:
+        st.info("No images extracted yet. Keep the ZIP files inside `Images/` or push them to GitHub `Images/`.")
+        return
+
+    # Duplicate list so the horizontal scroll loops seamlessly without a gap
+    loop_items = valid_uris + valid_uris
+    cards_html = "".join(
+        f'<div class="scroll-slide-card"><img src="{uri}" alt="{name}" title="{name}"/></div>'
+        for uri, name in loop_items
+    )
+
+    st.markdown(
+        f"""
+        <div class="auto-scroll-wrapper" aria-label="Auto-scrolling gallery from ZIP archives">
+            <div class="auto-scroll-track">
+                {cards_html}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+# --- 5. WEBSITE DATA (NO SEPARATE IMAGE ASSIGNMENTS NEEDED) ---
 COMMITTEE_MEMBERS = [
     {"role": "President", "name": "Dr. Anirban Sen", "email": "president@alumniassoc.org"},
     {"role": "Vice President", "name": "Smt. Gargi Mukherjee", "email": "vp@alumniassoc.org"},
@@ -375,30 +463,12 @@ st.markdown(
 st.sidebar.title("Navigation")
 page = st.sidebar.radio(
     "Go to",
-    ["Cover Page", "Alumni Corner", "Events", "Support Us", "ZIP Image Mapper"],
+    ["Cover Page", "Alumni Corner", "Events", "Support Us"],
 )
 
 use_gh = st.sidebar.checkbox("Fetch ZIPs from GitHub if not in Images/", value=True)
-all_extracted_imgs = extract_images_from_zips(ZIP_FILENAMES, use_github_fallback=use_gh)
-st.sidebar.caption(f"Extracted images found: {len(all_extracted_imgs)}")
-
-if "img_map" not in st.session_state:
-    def pick(i: int) -> str | None:
-        return all_extracted_imgs[i % len(all_extracted_imgs)] if all_extracted_imgs else None
-
-    st.session_state.img_map = {
-        "slides": all_extracted_imgs[:3] if len(all_extracted_imgs) >= 3 else all_extracted_imgs,
-        "committee": [pick(i) for i in range(len(COMMITTEE_MEMBERS))],
-        "notable": [pick(i + 4) for i in range(len(NOTABLE_ALUMNI))],
-        "events": [pick(i + 7) for i in range(len(EVENTS_DATA))],
-    }
-
-
-def show_img(path: str | None, caption: str | None = None):
-    if path and os.path.exists(path):
-        st.image(path, caption=caption, use_container_width=True)
-    else:
-        st.info("No image assigned yet (open ZIP Image Mapper)")
+all_extracted_imgs = extract_all_zip_images(ZIP_FILENAMES, use_github_fallback=use_gh)
+st.sidebar.caption(f"Total ZIP images auto-scrolling: {len(all_extracted_imgs)}")
 
 
 def render_footer():
@@ -427,23 +497,8 @@ def render_footer():
 
 # --- 7. PAGES ---
 if page == "Cover Page":
-    slides = [p for p in st.session_state.img_map["slides"] if p and os.path.exists(p)]
-    auto_slide = st.sidebar.checkbox("Auto-play slideshow", value=False)
-    slot = st.empty()
-
-    if slides:
-        if auto_slide:
-            for idx, img_path in enumerate(slides):
-                with slot.container():
-                    st.image(img_path, caption=f"Field & Campus Highlight {idx + 1}", use_container_width=True)
-                time.sleep(3)
-                st.rerun()
-        else:
-            s_idx = st.slider("Slide through highlights", 1, len(slides), 1)
-            with slot.container():
-                st.image(slides[s_idx - 1], caption=f"Field & Campus Highlight {s_idx} of {len(slides)}", use_container_width=True)
-    else:
-        st.info("Keep the ZIP files inside `Images/` and pick slideshow photos in **ZIP Image Mapper**.")
+    render_zoo_divider("Live ZIP Gallery Auto-Scroll")
+    render_auto_scrolling_gallery(all_extracted_imgs)
 
     render_zoo_divider("Who Are We & Our Vision")
     c1, c2 = st.columns(2)
@@ -476,7 +531,6 @@ if page == "Cover Page":
     cols = st.columns(4)
     for idx, member in enumerate(COMMITTEE_MEMBERS):
         with cols[idx % 4]:
-            show_img(st.session_state.img_map["committee"][idx], caption=member["role"])
             st.markdown(
                 f"""
                 <div class="blue-card">
@@ -497,7 +551,6 @@ elif page == "Alumni Corner":
     n_cols = st.columns(3)
     for idx, alum in enumerate(NOTABLE_ALUMNI):
         with n_cols[idx % 3]:
-            show_img(st.session_state.img_map["notable"][idx], caption=alum["name"])
             st.markdown(
                 f"""
                 <div class="blue-card">
@@ -538,19 +591,15 @@ elif page == "Events":
     st.header("Our Events & Initiatives")
     for idx, event in enumerate(EVENTS_DATA):
         render_zoo_divider(f"Initiative {idx + 1}")
-        c1, c2 = st.columns([1, 2])
-        with c1:
-            show_img(st.session_state.img_map["events"][idx], caption=event["title"])
-        with c2:
-            st.markdown(
-                f"""
-                <div class="blue-card">
-                    <h3>{event["title"]}</h3>
-                    <p>{event["description"]}</p>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            f"""
+            <div class="blue-card">
+                <h3>{event["title"]}</h3>
+                <p>{event["description"]}</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     render_footer()
 
@@ -572,37 +621,3 @@ elif page == "Support Us":
         r.code(v, language=None)
 
     render_footer()
-
-elif page == "ZIP Image Mapper":
-    st.header("Assign Extracted ZIP Images")
-    if not all_extracted_imgs:
-        st.warning("No images extracted yet. Keep `.zip` files inside `Images/` and push to GitHub.")
-        st.stop()
-
-    options = all_extracted_imgs
-    st.session_state.img_map["slides"] = st.multiselect(
-        "Slideshow Images",
-        options=options,
-        default=[p for p in st.session_state.img_map["slides"] if p in options],
-    )
-
-    for i, m in enumerate(COMMITTEE_MEMBERS):
-        cur = st.session_state.img_map["committee"][i]
-        idx = options.index(cur) if cur in options else 0
-        st.session_state.img_map["committee"][i] = st.selectbox(
-            f"Committee — {m['role']} ({m['name']})", options, index=idx, key=f"c_{i}"
-        )
-
-    for i, a in enumerate(NOTABLE_ALUMNI):
-        cur = st.session_state.img_map["notable"][i]
-        idx = options.index(cur) if cur in options else 0
-        st.session_state.img_map["notable"][i] = st.selectbox(
-            f"Notable Alumni — {a['name']}", options, index=idx, key=f"n_{i}"
-        )
-
-    for i, e in enumerate(EVENTS_DATA):
-        cur = st.session_state.img_map["events"][i]
-        idx = options.index(cur) if cur in options else 0
-        st.session_state.img_map["events"][i] = st.selectbox(
-            f"Event — {e['title']}", options, index=idx, key=f"e_{i}"
-        )
