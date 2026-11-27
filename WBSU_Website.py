@@ -100,6 +100,7 @@ st.markdown(
             background: var(--bg-gradient) !important;
             background-color: transparent !important;
             color: var(--text-main) !important;
+            text-align: center !important;
         }}
 
         .stApp *,
@@ -111,6 +112,7 @@ st.markdown(
 
         h1, h2, h3, h4, h5, h6 {{
             color: var(--text-main) !important;
+            text-align: center !important;
         }}
 
         /* Top-right MENU button (<MENU / MENU>) with 10px padding and theme-reactive colours */
@@ -169,6 +171,7 @@ st.markdown(
             border-radius: 14px !important;
             padding: 14px 16px !important;
             box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35) !important;
+            text-align: left !important;
         }}
 
         /* Zoology & Auto-Scroll Animations */
@@ -209,13 +212,20 @@ st.markdown(
         }}
 
         .hero-title-wrap {{
-            padding: 8px 4px 12px 4px;
-            margin-bottom: 14px;
+            padding: 12px 16px 14px 16px;
+            margin: 0 auto 14px auto;
+            max-width: 980px;
             animation: fadeSlideUp 0.55s ease-out both;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
+            justify-content: center;
+            text-align: center;
+            gap: 10px;
+        }}
+
+        .hero-title-text {{
+            text-align: center !important;
         }}
 
         .hero-title-text h1 {{
@@ -224,6 +234,7 @@ st.markdown(
             font-weight: 800;
             margin: 0 0 6px 0;
             line-height: 1.2;
+            text-align: center !important;
         }}
 
         .hero-title-text p {{
@@ -232,6 +243,7 @@ st.markdown(
             font-weight: 500;
             margin: 0;
             line-height: 1.45;
+            text-align: center !important;
         }}
 
         .auto-scroll-wrapper {{
@@ -242,7 +254,7 @@ st.markdown(
             background-color: var(--card-bg) !important;
             box-shadow: var(--shadow-soft);
             padding: 14px 0;
-            margin-bottom: 16px;
+            margin: 0 auto 18px auto;
         }}
 
         .auto-scroll-track {{
@@ -278,11 +290,12 @@ st.markdown(
         .blue-card {{
             background-color: var(--card-bg) !important;
             border: 1px solid var(--card-border);
-            border-left: 4px solid var(--accent);
+            border-top: 4px solid var(--accent);
             border-radius: 14px;
             padding: 18px 20px;
             margin-bottom: 14px;
             color: var(--text-main) !important;
+            text-align: center !important;
             box-shadow: var(--shadow-soft);
             transition: transform 0.25s ease, border-color 0.25s ease;
             animation: fadeSlideUp 0.45s ease-out both;
@@ -297,6 +310,7 @@ st.markdown(
         .blue-card strong,
         .blue-card p {{
             color: var(--text-main) !important;
+            text-align: center !important;
             line-height: 1.65;
         }}
 
@@ -313,6 +327,7 @@ st.markdown(
             padding: 18px 20px;
             margin-bottom: 14px;
             color: var(--text-main) !important;
+            text-align: center !important;
             box-shadow: var(--shadow-soft);
             transition: transform 0.25s ease, border-color 0.25s ease;
             animation: fadeSlideUp 0.45s ease-out both;
@@ -329,11 +344,14 @@ st.markdown(
             font-size: 1.02rem;
             display: block;
             margin-bottom: 6px;
+            text-align: center !important;
         }}
 
         .muted-text {{
             color: var(--text-muted) !important;
             font-size: 0.92rem;
+            text-align: center !important;
+            display: block;
         }}
 
         .role-badge {{
@@ -347,13 +365,16 @@ st.markdown(
             border-radius: 999px;
             margin-bottom: 8px;
             border: 1px solid var(--card-border);
+            text-align: center !important;
         }}
 
         .zoo-divider {{
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
-            margin: 22px 0 14px 0;
+            margin: 22px auto 14px auto;
+            max-width: 900px;
         }}
 
         .zoo-divider::before,
@@ -362,6 +383,15 @@ st.markdown(
             flex: 1;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+        }}
+
+        div[data-testid="stDownloadButton"] {{
+            display: flex;
+            justify-content: center;
+        }}
+
+        div[data-testid="stCodeBlock"] {{
+            margin: 0 auto;
         }}
     </style>
     """,
@@ -602,11 +632,11 @@ page = st.session_state.current_page
 st.markdown(
     f"""
     <div class="hero-title-wrap">
+        <div>{ZOOLOGY_HEADER_SVG}</div>
         <div class="hero-title-text">
             <h1>🐾 WBSU Zoology Alumni Association</h1>
             <p>Exploring Biodiversity • Mentorship &amp; Research • Giving Back to Our Alma Mater</p>
         </div>
-        <div>{ZOOLOGY_HEADER_SVG}</div>
     </div>
     """,
     unsafe_allow_html=True,
@@ -647,7 +677,6 @@ def render_footer():
 
 # --- 8. PAGES ---
 if page == "Cover Page":
-    render_zoo_divider("Live ZIP Gallery Auto-Scroll")
     render_auto_scrolling_gallery(all_extracted_imgs, seconds_per_image=3.6)
 
     render_zoo_divider("Who Are We & Our Vision")
