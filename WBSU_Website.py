@@ -1,764 +1,609 @@
-{
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": [],
-      "authorship_tag": "ABX9TyOJF8oAAMcpCf5WE8S+TvZu",
-      "include_colab_link": true
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "cells": [
-    {
-      "cell_type": "markdown",
-      "metadata": {
-        "id": "view-in-github",
-        "colab_type": "text"
-      },
-      "source": [
-        "<a href=\"https://colab.research.google.com/github/SristiSarkarMCKV/WBSU-website/blob/main/WBSU_Website.py\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 3,
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "MKTfLuPGY7OS",
-        "outputId": "9a3eaba5-576c-4117-c651-0bb7676ceb3f"
-      },
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stderr",
-          "text": [
-            "2026-11-27 14:33:17.445 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.447 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.449 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.450 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.452 No runtime found, using MemoryCacheStorageManager\n",
-            "2026-11-27 14:33:17.456 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.458 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.459 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.460 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.461 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.461 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.462 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.463 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.464 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.466 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.467 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.467 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.468 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.471 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.472 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.473 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.474 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.474 No runtime found, using MemoryCacheStorageManager\n",
-            "2026-11-27 14:33:17.478 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.783 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.783 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.784 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.787 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.792 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.793 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.794 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.795 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.796 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.797 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.798 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.799 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.801 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.801 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.803 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.805 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.806 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.807 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.807 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.809 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.811 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.811 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.812 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.815 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.815 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.816 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.817 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.818 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.820 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.820 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.821 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.822 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.823 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.824 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.825 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.826 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.828 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.828 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.829 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.830 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.832 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.833 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.833 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.835 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.835 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.836 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.837 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.838 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.840 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.840 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.841 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.842 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.843 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.844 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.846 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.846 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.847 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.848 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.849 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.850 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.851 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.852 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.853 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.853 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.855 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.856 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.858 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.858 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.859 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.860 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.861 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.862 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.863 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.864 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.865 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.867 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.867 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.868 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.870 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-            "2026-11-27 14:33:17.870 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n"
-          ]
+import io
+import os
+import time
+import urllib.parse
+import urllib.request
+import zipfile
+from pathlib import Path
+import streamlit as st
+
+st.set_page_config(
+    page_title="WBSU Alumni Association — Zoology",
+    page_icon="🦋",
+    layout="wide",
+)
+
+# --- 1. BLUE-TINT + DEVICE LIGHT/DARK + ZOOLOGY ANIMATIONS & GRAPHICS ---
+st.markdown(
+    """
+    <style>
+        :root {
+            --bg-tint: #eef5fc;
+            --bg-gradient: radial-gradient(circle at 12% 15%, #dcebfa 0%, #eef5fc 48%, #e4effb 100%);
+            --card-bg: rgba(247, 250, 255, 0.94);
+            --card-border: #b8d4f0;
+            --text-main: #0f2942;
+            --text-muted: #3b5b7a;
+            --accent: #1d5fa7;
+            --accent-hover: #144882;
+            --accent-soft: #dcebfa;
+            --banner-grad: linear-gradient(120deg, #0d2b4d 0%, #174b82 55%, #1f68b0 100%);
+            --shadow-soft: 0 8px 24px rgba(15, 41, 66, 0.08);
         }
-      ],
-      "source": [
-        "import io\n",
-        "import os\n",
-        "import time\n",
-        "import urllib.parse\n",
-        "import urllib.request\n",
-        "import zipfile\n",
-        "from pathlib import Path\n",
-        "import streamlit as st\n",
-        "\n",
-        "st.set_page_config(\n",
-        "    page_title=\"WBSU Alumni Association — Zoology\",\n",
-        "    page_icon=\"🦋\",\n",
-        "    layout=\"wide\",\n",
-        ")\n",
-        "\n",
-        "# --- 1. BLUE-TINT + DEVICE LIGHT/DARK + ZOOLOGY ANIMATIONS & GRAPHICS ---\n",
-        "st.markdown(\n",
-        "    \"\"\"\n",
-        "    <style>\n",
-        "        :root {\n",
-        "            --bg-tint: #eef5fc;\n",
-        "            --bg-gradient: radial-gradient(circle at 12% 15%, #dcebfa 0%, #eef5fc 48%, #e4effb 100%);\n",
-        "            --card-bg: rgba(247, 250, 255, 0.94);\n",
-        "            --card-border: #b8d4f0;\n",
-        "            --text-main: #0f2942;\n",
-        "            --text-muted: #3b5b7a;\n",
-        "            --accent: #1d5fa7;\n",
-        "            --accent-hover: #144882;\n",
-        "            --accent-soft: #dcebfa;\n",
-        "            --banner-grad: linear-gradient(120deg, #0d2b4d 0%, #174b82 55%, #1f68b0 100%);\n",
-        "            --shadow-soft: 0 8px 24px rgba(15, 41, 66, 0.08);\n",
-        "        }\n",
-        "\n",
-        "        @media (prefers-color-scheme: dark) {\n",
-        "            :root {\n",
-        "                --bg-tint: #091320;\n",
-        "                --bg-gradient: radial-gradient(circle at 15% 12%, #112742 0%, #091320 52%, #07101b 100%);\n",
-        "                --card-bg: rgba(16, 33, 54, 0.92);\n",
-        "                --card-border: #23466d;\n",
-        "                --text-main: #e6f1fc;\n",
-        "                --text-muted: #9ec0e0;\n",
-        "                --accent: #58a6ff;\n",
-        "                --accent-hover: #79b8ff;\n",
-        "                --accent-soft: #173252;\n",
-        "                --banner-grad: linear-gradient(120deg, #071628 0%, #102d4e 55%, #184270 100%);\n",
-        "                --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.35);\n",
-        "            }\n",
-        "        }\n",
-        "\n",
-        "        .stApp {\n",
-        "            background: var(--bg-gradient);\n",
-        "            background-attachment: fixed;\n",
-        "            color: var(--text-main);\n",
-        "        }\n",
-        "\n",
-        "        /* Subtle Zoology Keyframe Animations */\n",
-        "        @keyframes floatSpecimen {\n",
-        "            0%, 100% {\n",
-        "                transform: translateY(0px) rotate(0deg);\n",
-        "            }\n",
-        "            50% {\n",
-        "                transform: translateY(-7px) rotate(2.5deg);\n",
-        "            }\n",
-        "        }\n",
-        "\n",
-        "        @keyframes pulseRipple {\n",
-        "            0%, 100% {\n",
-        "                transform: scale(1);\n",
-        "                opacity: 0.75;\n",
-        "            }\n",
-        "            50% {\n",
-        "                transform: scale(1.06);\n",
-        "                opacity: 1;\n",
-        "            }\n",
-        "        }\n",
-        "\n",
-        "        @keyframes fadeSlideUp {\n",
-        "            from {\n",
-        "                opacity: 0;\n",
-        "                transform: translateY(10px);\n",
-        "            }\n",
-        "            to {\n",
-        "                opacity: 1;\n",
-        "                transform: translateY(0);\n",
-        "            }\n",
-        "        }\n",
-        "\n",
-        "        @media (prefers-reduced-motion: reduce) {\n",
-        "            .zoo-float, .zoo-pulse, .blue-card, .top-nav-banner {\n",
-        "                animation: none !important;\n",
-        "                transition: none !important;\n",
-        "            }\n",
-        "        }\n",
-        "\n",
-        "        .zoo-float {\n",
-        "            animation: floatSpecimen 5.5s ease-in-out infinite;\n",
-        "            display: inline-block;\n",
-        "        }\n",
-        "\n",
-        "        .zoo-pulse {\n",
-        "            animation: pulseRipple 3.8s ease-in-out infinite;\n",
-        "        }\n",
-        "\n",
-        "        .top-nav-banner {\n",
-        "            background: var(--banner-grad);\n",
-        "            border: 1px solid var(--card-border);\n",
-        "            border-radius: 16px;\n",
-        "            padding: 18px 24px;\n",
-        "            margin-bottom: 18px;\n",
-        "            box-shadow: var(--shadow-soft);\n",
-        "            animation: fadeSlideUp 0.55s ease-out both;\n",
-        "            display: flex;\n",
-        "            align-items: center;\n",
-        "            justify-content: space-between;\n",
-        "            gap: 16px;\n",
-        "        }\n",
-        "\n",
-        "        .top-nav-banner h2,\n",
-        "        .top-nav-banner p,\n",
-        "        .top-nav-banner span {\n",
-        "            color: #f2f8ff !important;\n",
-        "            margin: 0;\n",
-        "        }\n",
-        "\n",
-        "        .blue-card {\n",
-        "            background-color: var(--card-bg);\n",
-        "            border: 1px solid var(--card-border);\n",
-        "            border-left: 4px solid var(--accent);\n",
-        "            border-radius: 14px;\n",
-        "            padding: 18px 20px;\n",
-        "            margin-bottom: 14px;\n",
-        "            color: var(--text-main);\n",
-        "            box-shadow: var(--shadow-soft);\n",
-        "            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;\n",
-        "            animation: fadeSlideUp 0.45s ease-out both;\n",
-        "        }\n",
-        "\n",
-        "        .blue-card:hover {\n",
-        "            transform: translateY(-4px);\n",
-        "            border-color: var(--accent);\n",
-        "        }\n",
-        "\n",
-        "        .blue-card h3,\n",
-        "        .blue-card strong {\n",
-        "            color: var(--text-main);\n",
-        "        }\n",
-        "\n",
-        "        .blue-card p {\n",
-        "            color: var(--text-main);\n",
-        "            line-height: 1.65;\n",
-        "            margin-bottom: 0;\n",
-        "        }\n",
-        "\n",
-        "        .muted-text {\n",
-        "            color: var(--text-muted);\n",
-        "            font-size: 0.9rem;\n",
-        "        }\n",
-        "\n",
-        "        .role-badge {\n",
-        "            display: inline-block;\n",
-        "            background-color: var(--accent-soft);\n",
-        "            color: var(--accent);\n",
-        "            font-weight: 700;\n",
-        "            font-size: 0.76rem;\n",
-        "            letter-spacing: 0.03em;\n",
-        "            padding: 4px 10px;\n",
-        "            border-radius: 999px;\n",
-        "            margin-bottom: 8px;\n",
-        "            border: 1px solid var(--card-border);\n",
-        "        }\n",
-        "\n",
-        "        .zoo-divider {\n",
-        "            display: flex;\n",
-        "            align-items: center;\n",
-        "            gap: 12px;\n",
-        "            margin: 22px 0 14px 0;\n",
-        "        }\n",
-        "\n",
-        "        .zoo-divider::before,\n",
-        "        .zoo-divider::after {\n",
-        "            content: \"\";\n",
-        "            flex: 1;\n",
-        "            height: 1px;\n",
-        "            background: linear-gradient(90deg, transparent, var(--card-border), transparent);\n",
-        "        }\n",
-        "    </style>\n",
-        "    \"\"\",\n",
-        "    unsafe_allow_html=True,\n",
-        ")\n",
-        "\n",
-        "# --- 2. ZOOLOGY SVG GRAPHICS ---\n",
-        "ZOOLOGY_HEADER_SVG = \"\"\"\n",
-        "<svg width=\"92\" height=\"64\" viewBox=\"0 0 92 64\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"zoo-float\" aria-label=\"Zoology emblem\">\n",
-        "  <!-- Stylized butterfly / wing specimen motif -->\n",
-        "  <path d=\"M46 32C36 16 14 10 10 24C7 34 22 40 46 32Z\" fill=\"#7CC4FA\" fill-opacity=\"0.35\" stroke=\"#BDE0FE\" stroke-width=\"2\"/>\n",
-        "  <path d=\"M46 32C56 16 78 10 82 24C85 34 70 40 46 32Z\" fill=\"#7CC4FA\" fill-opacity=\"0.35\" stroke=\"#BDE0FE\" stroke-width=\"2\"/>\n",
-        "  <path d=\"M46 32C34 34 20 44 26 53C31 60 42 48 46 32Z\" fill=\"#4EA8DE\" fill-opacity=\"0.4\" stroke=\"#90E0EF\" stroke-width=\"2\"/>\n",
-        "  <path d=\"M46 32C58 34 72 44 66 53C61 60 50 48 46 32Z\" fill=\"#4EA8DE\" fill-opacity=\"0.4\" stroke=\"#90E0EF\" stroke-width=\"2\"/>\n",
-        "  <line x1=\"46\" y1=\"15\" x2=\"46\" y2=\"52\" stroke=\"#E6F1FC\" stroke-width=\"2.4\" stroke-linecap=\"round\"/>\n",
-        "  <path d=\"M46 16C42 10 37 8 34 9\" stroke=\"#E6F1FC\" stroke-width=\"1.8\" stroke-linecap=\"round\"/>\n",
-        "  <path d=\"M46 16C50 10 55 8 58 9\" stroke=\"#E6F1FC\" stroke-width=\"1.8\" stroke-linecap=\"round\"/>\n",
-        "  <circle cx=\"24\" cy=\"25\" r=\"3.5\" fill=\"#E6F1FC\" fill-opacity=\"0.75\"/>\n",
-        "  <circle cx=\"68\" cy=\"25\" r=\"3.5\" fill=\"#E6F1FC\" fill-opacity=\"0.75\"/>\n",
-        "</svg>\n",
-        "\"\"\"\n",
-        "\n",
-        "ZOOLOGY_RIBBON_SVG = \"\"\"\n",
-        "<div style=\"display:flex; justify-content:center; align-items:center; gap:18px; padding:6px 0;\">\n",
-        "  <svg width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"zoo-pulse\">\n",
-        "    <circle cx=\"14\" cy=\"14\" r=\"10\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-dasharray=\"3 3\"/>\n",
-        "    <circle cx=\"14\" cy=\"14\" r=\"4\" fill=\"currentColor\"/>\n",
-        "  </svg>\n",
-        "  <svg width=\"160\" height=\"26\" viewBox=\"0 0 160 26\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n",
-        "    <!-- Subtle DNA / taxonomic wave graphic -->\n",
-        "    <path d=\"M4 13C24 2 44 24 64 13C84 2 104 24 124 13C136 6 146 10 156 13\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" opacity=\"0.75\"/>\n",
-        "    <path d=\"M4 13C24 24 44 2 64 13C84 24 104 2 124 13C136 20 146 16 156 13\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-dasharray=\"4 3\" stroke-linecap=\"round\" opacity=\"0.55\"/>\n",
-        "  </svg>\n",
-        "  <svg width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" class=\"zoo-float\">\n",
-        "    <path d=\"M6 16C10 9 18 9 22 16C18 21 10 21 6 16Z\" stroke=\"currentColor\" stroke-width=\"1.6\"/>\n",
-        "    <circle cx=\"14\" cy=\"15\" r=\"2.5\" fill=\"currentColor\"/>\n",
-        "  </svg>\n",
-        "</div>\n",
-        "\"\"\"\n",
-        "\n",
-        "\n",
-        "def render_zoo_divider(label: str):\n",
-        "    st.markdown(\n",
-        "        f\"\"\"\n",
-        "        <div class=\"zoo-divider\">\n",
-        "            <span class=\"role-badge\" style=\"margin:0;\">🔬 {label}</span>\n",
-        "        </div>\n",
-        "        \"\"\",\n",
-        "        unsafe_allow_html=True,\n",
-        "    )\n",
-        "\n",
-        "\n",
-        "# --- 3. ZIP FILES CONFIGURATION ---\n",
-        "ZIP_FILENAMES = [\n",
-        "    \"WhatsApp Unknown 2026-11-18 at 13.03.49.zip\",\n",
-        "    \"WhatsApp Unknown 2026-11-18 at 13.03.45.zip\",\n",
-        "    \"WhatsApp Unknown 2026-11-18 at 13.03.39.zip\",\n",
-        "]\n",
-        "\n",
-        "LOCAL_ZIP_DIR = Path(\"zips\")\n",
-        "EXTRACTED_IMG_DIR = Path(\"extracted_images\")\n",
-        "GITHUB_RAW_ZIP_BASE = \"https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images\"\n",
-        "IMAGE_EXTENSIONS = {\".jpg\", \".jpeg\", \".png\", \".webp\"}\n",
-        "\n",
-        "\n",
-        "@st.cache_data(show_spinner=\"Extracting specimen & event images from ZIP archives...\")\n",
-        "def extract_images_from_zips(zip_names: list[str], use_github_fallback: bool = True) -> list[str]:\n",
-        "    EXTRACTED_IMG_DIR.mkdir(parents=True, exist_ok=True)\n",
-        "    found_images: list[str] = []\n",
-        "\n",
-        "    for zname in zip_names:\n",
-        "        zip_bytes: bytes | None = None\n",
-        "        for candidate in [LOCAL_ZIP_DIR / zname, Path(\"Images\") / zname, Path(zname)]:\n",
-        "            if candidate.exists():\n",
-        "                zip_bytes = candidate.read_bytes()\n",
-        "                break\n",
-        "\n",
-        "        if zip_bytes is None and use_github_fallback:\n",
-        "            encoded_name = urllib.parse.quote(zname)\n",
-        "            url = f\"{GITHUB_RAW_ZIP_BASE}/{encoded_name}\"\n",
-        "            try:\n",
-        "                with urllib.request.urlopen(url, timeout=15) as resp:\n",
-        "                    zip_bytes = resp.read()\n",
-        "            except Exception:\n",
-        "                zip_bytes = None\n",
-        "\n",
-        "        if not zip_bytes:\n",
-        "            continue\n",
-        "\n",
-        "        safe_prefix = zname.replace(\".zip\", \"\").replace(\" \", \"_\").replace(\":\", \"-\")\n",
-        "        target_subdir = EXTRACTED_IMG_DIR / safe_prefix\n",
-        "        target_subdir.mkdir(parents=True, exist_ok=True)\n",
-        "\n",
-        "        with zipfile.ZipFile(io.BytesIO(zip_bytes), \"r\") as zf:\n",
-        "            for member in zf.infolist():\n",
-        "                if member.is_dir():\n",
-        "                    continue\n",
-        "                if Path(member.filename).suffix.lower() in IMAGE_EXTENSIONS:\n",
-        "                    clean_name = Path(member.filename).name\n",
-        "                    if clean_name.startswith(\"._\"):\n",
-        "                        continue\n",
-        "                    out_path = target_subdir / clean_name\n",
-        "                    with zf.open(member) as src, open(out_path, \"wb\") as dst:\n",
-        "                        dst.write(src.read())\n",
-        "                    found_images.append(str(out_path))\n",
-        "\n",
-        "    return sorted(found_images)\n",
-        "\n",
-        "\n",
-        "# --- 4. WEBSITE DATA ---\n",
-        "COMMITTEE_MEMBERS = [\n",
-        "    {\"role\": \"President\", \"name\": \"Dr. Anirban Sen\", \"email\": \"president@alumniassoc.org\"},\n",
-        "    {\"role\": \"Vice President\", \"name\": \"Smt. Gargi Mukherjee\", \"email\": \"vp@alumniassoc.org\"},\n",
-        "    {\"role\": \"General Secretary\", \"name\": \"Sri Sourav Chatterjee\", \"email\": \"gs@alumniassoc.org\"},\n",
-        "    {\"role\": \"Treasurer\", \"name\": \"Sri Debashis Roy\", \"email\": \"treasurer@alumniassoc.org\"},\n",
-        "]\n",
-        "\n",
-        "ALUMNI_PDFS = [\n",
-        "    {\"year\": \"Batch of 2020\", \"file\": \"pdfs/alumni_2020.pdf\"},\n",
-        "    {\"year\": \"Batch of 2021\", \"file\": \"pdfs/alumni_2021.pdf\"},\n",
-        "    {\"year\": \"Batch of 2022\", \"file\": \"pdfs/alumni_2022.pdf\"},\n",
-        "    {\"year\": \"Batch of 2023\", \"file\": \"pdfs/alumni_2023.pdf\"},\n",
-        "]\n",
-        "\n",
-        "NOTABLE_ALUMNI = [\n",
-        "    {\"name\": \"Subhojit Das\", \"position\": \"Senior Scientist, ISRO\", \"email\": \"subhojit.das@example.com\"},\n",
-        "    {\"name\": \"Riya Chakraborty\", \"position\": \"IAS Officer, Govt. of West Bengal\", \"email\": \"riya.ias@example.com\"},\n",
-        "    {\"name\": \"Kaushik Bose\", \"position\": \"VP of Engineering, Google\", \"email\": \"kaushik.b@example.com\"},\n",
-        "]\n",
-        "\n",
-        "EVENTS_DATA = [\n",
-        "    {\n",
-        "        \"title\": \"Annual Alumni Seminar & Guest Lectures\",\n",
-        "        \"description\": (\n",
-        "            \"Our annual seminar bridges the gap between current students and industry veterans. \"\n",
-        "            \"Through interactive sessions, former students share insights on emerging technologies, \"\n",
-        "            \"career pathways, and research opportunities. These lectures inspire young minds to aim higher \"\n",
-        "            \"and prepare for real-world challenges. It fosters a culture of continuous learning and mentorship \"\n",
-        "            \"within our academic community, helping students build strong professional networks early on.\"\n",
-        "        ),\n",
-        "    },\n",
-        "    {\n",
-        "        \"title\": \"Grand Alumni Reunion\",\n",
-        "        \"description\": (\n",
-        "            \"The Grand Reunion is a celebration of lifelong friendships, shared memories, and institutional pride. \"\n",
-        "            \"Graduates from different decades return to campus to reconnect with old batchmates and beloved faculty members. \"\n",
-        "            \"Beyond nostalgia, this gathering strengthens our alumni network and creates opportunities for collaborative \"\n",
-        "            \"initiatives. It reminds every member that no matter where life takes them, their alma mater remains \"\n",
-        "            \"a permanent home and a pillar of support.\"\n",
-        "        ),\n",
-        "    },\n",
-        "    {\n",
-        "        \"title\": \"Green Campus Plantation Drive\",\n",
-        "        \"description\": (\n",
-        "            \"Committed to environmental sustainability, our alumni regularly organize tree plantation drives across \"\n",
-        "            \"the campus and surrounding locality. Climate change demands collective action, and this initiative instills \"\n",
-        "            \"ecological responsibility among both students and former graduates. By nurturing green spaces today, \"\n",
-        "            \"we ensure a cleaner, healthier environment for future generations. Each sapling planted stands as a \"\n",
-        "            \"living symbol of our enduring bond with the institution.\"\n",
-        "        ),\n",
-        "    },\n",
-        "]\n",
-        "\n",
-        "BANK_DETAILS = {\n",
-        "    \"Account Name\": \"XYZ College Alumni Association\",\n",
-        "    \"Bank Name\": \"State Bank of India (SBI)\",\n",
-        "    \"Branch\": \"Khardaha Branch, West Bengal\",\n",
-        "    \"Account Number\": \"123456789012\",\n",
-        "    \"IFSC Code\": \"SBIN0001234\",\n",
-        "    \"UPI ID\": \"alumniassoc@sbi\",\n",
-        "}\n",
-        "\n",
-        "CONTACT_INFO = {\n",
-        "    \"address\": \"123 College Road, Campus Building, Kolkata - 700117, West Bengal\",\n",
-        "    \"phone\": \"+91 98765 43210\",\n",
-        "    \"email\": \"contact@alumniassoc.org\",\n",
-        "}\n",
-        "\n",
-        "# --- 5. HEADER & NAVIGATION ---\n",
-        "st.markdown(\n",
-        "    f\"\"\"\n",
-        "    <div class=\"top-nav-banner\">\n",
-        "        <div>\n",
-        "            <h2>🐾 WBSU Zoology Alumni Association</h2>\n",
-        "            <p>Exploring Biodiversity • Mentorship &amp; Research • Giving Back to Our Alma Mater</p>\n",
-        "        </div>\n",
-        "        <div>{ZOOLOGY_HEADER_SVG}</div>\n",
-        "    </div>\n",
-        "    \"\"\",\n",
-        "    unsafe_allow_html=True,\n",
-        ")\n",
-        "\n",
-        "st.sidebar.title(\"Navigation\")\n",
-        "page = st.sidebar.radio(\n",
-        "    \"Go to\",\n",
-        "    [\"Cover Page\", \"Alumni Corner\", \"Events\", \"Support Us\", \"ZIP Image Mapper\"],\n",
-        ")\n",
-        "\n",
-        "use_gh = st.sidebar.checkbox(\"Fetch ZIPs from GitHub if not local\", value=True)\n",
-        "all_extracted_imgs = extract_images_from_zips(ZIP_FILENAMES, use_github_fallback=use_gh)\n",
-        "st.sidebar.caption(f\"Extracted images found: {len(all_extracted_imgs)}\")\n",
-        "\n",
-        "if \"img_map\" not in st.session_state:\n",
-        "    def pick(i: int) -> str | None:\n",
-        "        return all_extracted_imgs[i % len(all_extracted_imgs)] if all_extracted_imgs else None\n",
-        "\n",
-        "    st.session_state.img_map = {\n",
-        "        \"slides\": all_extracted_imgs[:3] if len(all_extracted_imgs) >= 3 else all_extracted_imgs,\n",
-        "        \"committee\": [pick(i) for i in range(len(COMMITTEE_MEMBERS))],\n",
-        "        \"notable\": [pick(i + 4) for i in range(len(NOTABLE_ALUMNI))],\n",
-        "        \"events\": [pick(i + 7) for i in range(len(EVENTS_DATA))],\n",
-        "    }\n",
-        "\n",
-        "\n",
-        "def show_img(path: str | None, caption: str | None = None):\n",
-        "    if path and os.path.exists(path):\n",
-        "        st.image(path, caption=caption, use_container_width=True)\n",
-        "    else:\n",
-        "        st.info(\"No image assigned yet (open ZIP Image Mapper)\")\n",
-        "\n",
-        "\n",
-        "def render_footer():\n",
-        "    st.markdown(ZOOLOGY_RIBBON_SVG, unsafe_allow_html=True)\n",
-        "    c1, c2, c3 = st.columns(3)\n",
-        "    with c1:\n",
-        "        st.markdown(\n",
-        "            '<div class=\"blue-card\"><strong>Zoology Alumni Association</strong><br>'\n",
-        "            '<span class=\"muted-text\">Uniting past, present, and future generations of naturalists &amp; scholars.</span></div>',\n",
-        "            unsafe_allow_html=True,\n",
-        "        )\n",
-        "    with c2:\n",
-        "        st.markdown(\n",
-        "            f'<div class=\"blue-card\"><strong>Address</strong><br>'\n",
-        "            f'<span class=\"muted-text\">{CONTACT_INFO[\"address\"]}</span></div>',\n",
-        "            unsafe_allow_html=True,\n",
-        "        )\n",
-        "    with c3:\n",
-        "        st.markdown(\n",
-        "            f'<div class=\"blue-card\"><strong>Contact</strong><br>'\n",
-        "            f'<span class=\"muted-text\">Email: {CONTACT_INFO[\"email\"]}<br>'\n",
-        "            f'Phone: {CONTACT_INFO[\"phone\"]}</span></div>',\n",
-        "            unsafe_allow_html=True,\n",
-        "        )\n",
-        "\n",
-        "\n",
-        "# --- 6. PAGES ---\n",
-        "if page == \"Cover Page\":\n",
-        "    slides = [p for p in st.session_state.img_map[\"slides\"] if p and os.path.exists(p)]\n",
-        "    auto_slide = st.sidebar.checkbox(\"Auto-play slideshow\", value=False)\n",
-        "    slot = st.empty()\n",
-        "\n",
-        "    if slides:\n",
-        "        if auto_slide:\n",
-        "            for idx, img_path in enumerate(slides):\n",
-        "                with slot.container():\n",
-        "                    st.image(img_path, caption=f\"Field & Campus Highlight {idx + 1}\", use_container_width=True)\n",
-        "                time.sleep(3)\n",
-        "                st.rerun()\n",
-        "        else:\n",
-        "            s_idx = st.slider(\"Slide through highlights\", 1, len(slides), 1)\n",
-        "            with slot.container():\n",
-        "                st.image(slides[s_idx - 1], caption=f\"Field & Campus Highlight {s_idx} of {len(slides)}\", use_container_width=True)\n",
-        "    else:\n",
-        "        st.info(\"Add the ZIP files to `Images/` or `zips/` and pick slideshow images in **ZIP Image Mapper**.\")\n",
-        "\n",
-        "    render_zoo_divider(\"Who Are We & Our Vision\")\n",
-        "    c1, c2 = st.columns(2)\n",
-        "    with c1:\n",
-        "        st.markdown(\n",
-        "            \"\"\"\n",
-        "            <div class=\"blue-card\">\n",
-        "                <h3>Who Are We?</h3>\n",
-        "                <p>We are a registered body of former students dedicated to maintaining a lifelong bond\n",
-        "                between the institution and its graduates. Our association connects batches across years,\n",
-        "                bringing together researchers, conservationists, educators, and leaders on one platform.</p>\n",
-        "            </div>\n",
-        "            \"\"\",\n",
-        "            unsafe_allow_html=True,\n",
-        "        )\n",
-        "    with c2:\n",
-        "        st.markdown(\n",
-        "            \"\"\"\n",
-        "            <div class=\"blue-card\">\n",
-        "                <h3>Our Vision</h3>\n",
-        "                <p>Our vision is to build a vibrant, supportive alumni community that actively contributes\n",
-        "                to student welfare, zoological research excellence, biodiversity awareness, and social impact\n",
-        "                through mentorship, scholarships, and collaborative initiatives.</p>\n",
-        "            </div>\n",
-        "            \"\"\",\n",
-        "            unsafe_allow_html=True,\n",
-        "        )\n",
-        "\n",
-        "    render_zoo_divider(\"Who's Who\")\n",
-        "    cols = st.columns(4)\n",
-        "    for idx, member in enumerate(COMMITTEE_MEMBERS):\n",
-        "        with cols[idx % 4]:\n",
-        "            show_img(st.session_state.img_map[\"committee\"][idx], caption=member[\"role\"])\n",
-        "            st.markdown(\n",
-        "                f\"\"\"\n",
-        "                <div class=\"blue-card\">\n",
-        "                    <span class=\"role-badge\">{member[\"role\"]}</span><br>\n",
-        "                    <strong>{member[\"name\"]}</strong><br>\n",
-        "                    <span class=\"muted-text\">{member[\"email\"]}</span>\n",
-        "                </div>\n",
-        "                \"\"\",\n",
-        "                unsafe_allow_html=True,\n",
-        "            )\n",
-        "\n",
-        "    render_footer()\n",
-        "\n",
-        "elif page == \"Alumni Corner\":\n",
-        "    st.header(\"Alumni Corner\")\n",
-        "\n",
-        "    render_zoo_divider(\"Notable Alumni\")\n",
-        "    n_cols = st.columns(3)\n",
-        "    for idx, alum in enumerate(NOTABLE_ALUMNI):\n",
-        "        with n_cols[idx % 3]:\n",
-        "            show_img(st.session_state.img_map[\"notable\"][idx], caption=alum[\"name\"])\n",
-        "            st.markdown(\n",
-        "                f\"\"\"\n",
-        "                <div class=\"blue-card\">\n",
-        "                    <span class=\"role-badge\">Distinguished Alumnus/Alumna</span><br>\n",
-        "                    <strong>{alum[\"name\"]}</strong><br>\n",
-        "                    <span>{alum[\"position\"]}</span><br>\n",
-        "                    <span class=\"muted-text\">{alum[\"email\"]}</span>\n",
-        "                </div>\n",
-        "                \"\"\",\n",
-        "                unsafe_allow_html=True,\n",
-        "            )\n",
-        "\n",
-        "    render_zoo_divider(\"Year-by-Year Alumni Directory (PDF)\")\n",
-        "    p_cols = st.columns(2)\n",
-        "    for idx, item in enumerate(ALUMNI_PDFS):\n",
-        "        with p_cols[idx % 2]:\n",
-        "            st.markdown(\n",
-        "                f'<div class=\"blue-card\"><strong>{item[\"year\"]}</strong><br>'\n",
-        "                f'<span class=\"muted-text\">Student Names &amp; Email IDs</span></div>',\n",
-        "                unsafe_allow_html=True,\n",
-        "            )\n",
-        "            if os.path.exists(item[\"file\"]):\n",
-        "                with open(item[\"file\"], \"rb\") as f:\n",
-        "                    st.download_button(\n",
-        "                        label=f\"Download {item['year']} PDF\",\n",
-        "                        data=f.read(),\n",
-        "                        file_name=os.path.basename(item[\"file\"]),\n",
-        "                        mime=\"application/pdf\",\n",
-        "                        key=f\"dl_{idx}\",\n",
-        "                    )\n",
-        "            else:\n",
-        "                st.caption(f\"Add `{item['file']}` to enable download.\")\n",
-        "\n",
-        "    render_footer()\n",
-        "\n",
-        "elif page == \"Events\":\n",
-        "    st.header(\"Our Events & Initiatives\")\n",
-        "    for idx, event in enumerate(EVENTS_DATA):\n",
-        "        render_zoo_divider(f\"Initiative {idx + 1}\")\n",
-        "        c1, c2 = st.columns([1, 2])\n",
-        "        with c1:\n",
-        "            show_img(st.session_state.img_map[\"events\"][idx], caption=event[\"title\"])\n",
-        "        with c2:\n",
-        "            st.markdown(\n",
-        "                f\"\"\"\n",
-        "                <div class=\"blue-card\">\n",
-        "                    <h3>{event[\"title\"]}</h3>\n",
-        "                    <p>{event[\"description\"]}</p>\n",
-        "                </div>\n",
-        "                \"\"\",\n",
-        "                unsafe_allow_html=True,\n",
-        "            )\n",
-        "\n",
-        "    render_footer()\n",
-        "\n",
-        "elif page == \"Support Us\":\n",
-        "    st.header(\"Support Us\")\n",
-        "    st.markdown(\n",
-        "        \"\"\"\n",
-        "        <div class=\"blue-card\">\n",
-        "            <p>Your generous contributions help fund student scholarships, zoological field seminars,\n",
-        "            ecological initiatives, and campus welfare programmes.</p>\n",
-        "        </div>\n",
-        "        \"\"\",\n",
-        "        unsafe_allow_html=True,\n",
-        "    )\n",
-        "    render_zoo_divider(\"Official Bank Account Details\")\n",
-        "    for k, v in BANK_DETAILS.items():\n",
-        "        l, r = st.columns([1, 2])\n",
-        "        l.markdown(f\"**{k}**\")\n",
-        "        r.code(v, language=None)\n",
-        "\n",
-        "    render_footer()\n",
-        "\n",
-        "elif page == \"ZIP Image Mapper\":\n",
-        "    st.header(\"Assign Extracted ZIP Images\")\n",
-        "    if not all_extracted_imgs:\n",
-        "        st.warning(\"No images extracted yet. Place `.zip` files in `Images/` or `zips/` and push to GitHub.\")\n",
-        "        st.stop()\n",
-        "\n",
-        "    options = all_extracted_imgs\n",
-        "    st.session_state.img_map[\"slides\"] = st.multiselect(\n",
-        "        \"Slideshow Images\",\n",
-        "        options=options,\n",
-        "        default=[p for p in st.session_state.img_map[\"slides\"] if p in options],\n",
-        "    )\n",
-        "\n",
-        "    for i, m in enumerate(COMMITTEE_MEMBERS):\n",
-        "        cur = st.session_state.img_map[\"committee\"][i]\n",
-        "        idx = options.index(cur) if cur in options else 0\n",
-        "        st.session_state.img_map[\"committee\"][i] = st.selectbox(\n",
-        "            f\"Committee — {m['role']} ({m['name']})\", options, index=idx, key=f\"c_{i}\"\n",
-        "        )\n",
-        "\n",
-        "    for i, a in enumerate(NOTABLE_ALUMNI):\n",
-        "        cur = st.session_state.img_map[\"notable\"][i]\n",
-        "        idx = options.index(cur) if cur in options else 0\n",
-        "        st.session_state.img_map[\"notable\"][i] = st.selectbox(\n",
-        "            f\"Notable Alumni — {a['name']}\", options, index=idx, key=f\"n_{i}\"\n",
-        "        )\n",
-        "\n",
-        "    for i, e in enumerate(EVENTS_DATA):\n",
-        "        cur = st.session_state.img_map[\"events\"][i]\n",
-        "        idx = options.index(cur) if cur in options else 0\n",
-        "        st.session_state.img_map[\"events\"][i] = st.selectbox(\n",
-        "            f\"Event — {e['title']}\", options, index=idx, key=f\"e_{i}\"\n",
-        "        )"
-      ]
-    }
-  ]
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-tint: #091320;
+                --bg-gradient: radial-gradient(circle at 15% 12%, #112742 0%, #091320 52%, #07101b 100%);
+                --card-bg: rgba(16, 33, 54, 0.92);
+                --card-border: #23466d;
+                --text-main: #e6f1fc;
+                --text-muted: #9ec0e0;
+                --accent: #58a6ff;
+                --accent-hover: #79b8ff;
+                --accent-soft: #173252;
+                --banner-grad: linear-gradient(120deg, #071628 0%, #102d4e 55%, #184270 100%);
+                --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.35);
+            }
+        }
+
+        .stApp {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+        }
+
+        /* Subtle Zoology Keyframe Animations */
+        @keyframes floatSpecimen {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-7px) rotate(2.5deg);
+            }
+        }
+
+        @keyframes pulseRipple {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.75;
+            }
+            50% {
+                transform: scale(1.06);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .zoo-float, .zoo-pulse, .blue-card, .top-nav-banner {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        .zoo-float {
+            animation: floatSpecimen 5.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .zoo-pulse {
+            animation: pulseRipple 3.8s ease-in-out infinite;
+        }
+
+        .top-nav-banner {
+            background: var(--banner-grad);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 18px 24px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-soft);
+            animation: fadeSlideUp 0.55s ease-out both;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .top-nav-banner h2,
+        .top-nav-banner p,
+        .top-nav-banner span {
+            color: #f2f8ff !important;
+            margin: 0;
+        }
+
+        .blue-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-left: 4px solid var(--accent);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            color: var(--text-main);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            animation: fadeSlideUp 0.45s ease-out both;
+        }
+
+        .blue-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .blue-card h3,
+        .blue-card strong {
+            color: var(--text-main);
+        }
+
+        .blue-card p {
+            color: var(--text-main);
+            line-height: 1.65;
+            margin-bottom: 0;
+        }
+
+        .muted-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .role-badge {
+            display: inline-block;
+            background-color: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.76rem;
+            letter-spacing: 0.03em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+            border: 1px solid var(--card-border);
+        }
+
+        .zoo-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 22px 0 14px 0;
+        }
+
+        .zoo-divider::before,
+        .zoo-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# --- 2. ZOOLOGY SVG GRAPHICS ---
+ZOOLOGY_HEADER_SVG = """
+<svg width="92" height="64" viewBox="0 0 92 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="zoo-float" aria-label="Zoology emblem">
+  <!-- Stylized butterfly / wing specimen motif -->
+  <path d="M46 32C36 16 14 10 10 24C7 34 22 40 46 32Z" fill="#7CC4FA" fill-opacity="0.35" stroke="#BDE0FE" stroke-width="2"/>
+  <path d="M46 32C56 16 78 10 82 24C85 34 70 40 46 32Z" fill="#7CC4FA" fill-opacity="0.35" stroke="#BDE0FE" stroke-width="2"/>
+  <path d="M46 32C34 34 20 44 26 53C31 60 42 48 46 32Z" fill="#4EA8DE" fill-opacity="0.4" stroke="#90E0EF" stroke-width="2"/>
+  <path d="M46 32C58 34 72 44 66 53C61 60 50 48 46 32Z" fill="#4EA8DE" fill-opacity="0.4" stroke="#90E0EF" stroke-width="2"/>
+  <line x1="46" y1="15" x2="46" y2="52" stroke="#E6F1FC" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M46 16C42 10 37 8 34 9" stroke="#E6F1FC" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M46 16C50 10 55 8 58 9" stroke="#E6F1FC" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="24" cy="25" r="3.5" fill="#E6F1FC" fill-opacity="0.75"/>
+  <circle cx="68" cy="25" r="3.5" fill="#E6F1FC" fill-opacity="0.75"/>
+</svg>
+"""
+
+ZOOLOGY_RIBBON_SVG = """
+<div style="display:flex; justify-content:center; align-items:center; gap:18px; padding:6px 0;">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="zoo-pulse">
+    <circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3"/>
+    <circle cx="14" cy="14" r="4" fill="currentColor"/>
+  </svg>
+  <svg width="160" height="26" viewBox="0 0 160 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Subtle DNA / taxonomic wave graphic -->
+    <path d="M4 13C24 2 44 24 64 13C84 2 104 24 124 13C136 6 146 10 156 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.75"/>
+    <path d="M4 13C24 24 44 2 64 13C84 24 104 2 124 13C136 20 146 16 156 13" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3" stroke-linecap="round" opacity="0.55"/>
+  </svg>
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="zoo-float">
+    <path d="M6 16C10 9 18 9 22 16C18 21 10 21 6 16Z" stroke="currentColor" stroke-width="1.6"/>
+    <circle cx="14" cy="15" r="2.5" fill="currentColor"/>
+  </svg>
+</div>
+"""
+
+
+def render_zoo_divider(label: str):
+    st.markdown(
+        f"""
+        <div class="zoo-divider">
+            <span class="role-badge" style="margin:0;">🔬 {label}</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+# --- 3. ZIP FILES CONFIGURATION ---
+ZIP_FILENAMES = [
+    "WhatsApp Unknown 2026-11-18 at 13.03.49.zip",
+    "WhatsApp Unknown 2026-11-18 at 13.03.45.zip",
+    "WhatsApp Unknown 2026-11-18 at 13.03.39.zip",
+]
+
+LOCAL_ZIP_DIR = Path("zips")
+EXTRACTED_IMG_DIR = Path("extracted_images")
+GITHUB_RAW_ZIP_BASE = "https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images"
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
+
+
+@st.cache_data(show_spinner="Extracting specimen & event images from ZIP archives...")
+def extract_images_from_zips(zip_names: list[str], use_github_fallback: bool = True) -> list[str]:
+    EXTRACTED_IMG_DIR.mkdir(parents=True, exist_ok=True)
+    found_images: list[str] = []
+
+    for zname in zip_names:
+        zip_bytes: bytes | None = None
+        for candidate in [LOCAL_ZIP_DIR / zname, Path("Images") / zname, Path(zname)]:
+            if candidate.exists():
+                zip_bytes = candidate.read_bytes()
+                break
+
+        if zip_bytes is None and use_github_fallback:
+            encoded_name = urllib.parse.quote(zname)
+            url = f"{GITHUB_RAW_ZIP_BASE}/{encoded_name}"
+            try:
+                with urllib.request.urlopen(url, timeout=15) as resp:
+                    zip_bytes = resp.read()
+            except Exception:
+                zip_bytes = None
+
+        if not zip_bytes:
+            continue
+
+        safe_prefix = zname.replace(".zip", "").replace(" ", "_").replace(":", "-")
+        target_subdir = EXTRACTED_IMG_DIR / safe_prefix
+        target_subdir.mkdir(parents=True, exist_ok=True)
+
+        with zipfile.ZipFile(io.BytesIO(zip_bytes), "r") as zf:
+            for member in zf.infolist():
+                if member.is_dir():
+                    continue
+                if Path(member.filename).suffix.lower() in IMAGE_EXTENSIONS:
+                    clean_name = Path(member.filename).name
+                    if clean_name.startswith("._"):
+                        continue
+                    out_path = target_subdir / clean_name
+                    with zf.open(member) as src, open(out_path, "wb") as dst:
+                        dst.write(src.read())
+                    found_images.append(str(out_path))
+
+    return sorted(found_images)
+
+
+# --- 4. WEBSITE DATA ---
+COMMITTEE_MEMBERS = [
+    {"role": "President", "name": "Dr. Anirban Sen", "email": "president@alumniassoc.org"},
+    {"role": "Vice President", "name": "Smt. Gargi Mukherjee", "email": "vp@alumniassoc.org"},
+    {"role": "General Secretary", "name": "Sri Sourav Chatterjee", "email": "gs@alumniassoc.org"},
+    {"role": "Treasurer", "name": "Sri Debashis Roy", "email": "treasurer@alumniassoc.org"},
+]
+
+ALUMNI_PDFS = [
+    {"year": "Batch of 2020", "file": "pdfs/alumni_2020.pdf"},
+    {"year": "Batch of 2021", "file": "pdfs/alumni_2021.pdf"},
+    {"year": "Batch of 2022", "file": "pdfs/alumni_2022.pdf"},
+    {"year": "Batch of 2023", "file": "pdfs/alumni_2023.pdf"},
+]
+
+NOTABLE_ALUMNI = [
+    {"name": "Subhojit Das", "position": "Senior Scientist, ISRO", "email": "subhojit.das@example.com"},
+    {"name": "Riya Chakraborty", "position": "IAS Officer, Govt. of West Bengal", "email": "riya.ias@example.com"},
+    {"name": "Kaushik Bose", "position": "VP of Engineering, Google", "email": "kaushik.b@example.com"},
+]
+
+EVENTS_DATA = [
+    {
+        "title": "Annual Alumni Seminar & Guest Lectures",
+        "description": (
+            "Our annual seminar bridges the gap between current students and industry veterans. "
+            "Through interactive sessions, former students share insights on emerging technologies, "
+            "career pathways, and research opportunities. These lectures inspire young minds to aim higher "
+            "and prepare for real-world challenges. It fosters a culture of continuous learning and mentorship "
+            "within our academic community, helping students build strong professional networks early on."
+        ),
+    },
+    {
+        "title": "Grand Alumni Reunion",
+        "description": (
+            "The Grand Reunion is a celebration of lifelong friendships, shared memories, and institutional pride. "
+            "Graduates from different decades return to campus to reconnect with old batchmates and beloved faculty members. "
+            "Beyond nostalgia, this gathering strengthens our alumni network and creates opportunities for collaborative "
+            "initiatives. It reminds every member that no matter where life takes them, their alma mater remains "
+            "a permanent home and a pillar of support."
+        ),
+    },
+    {
+        "title": "Green Campus Plantation Drive",
+        "description": (
+            "Committed to environmental sustainability, our alumni regularly organize tree plantation drives across "
+            "the campus and surrounding locality. Climate change demands collective action, and this initiative instills "
+            "ecological responsibility among both students and former graduates. By nurturing green spaces today, "
+            "we ensure a cleaner, healthier environment for future generations. Each sapling planted stands as a "
+            "living symbol of our enduring bond with the institution."
+        ),
+    },
+]
+
+BANK_DETAILS = {
+    "Account Name": "XYZ College Alumni Association",
+    "Bank Name": "State Bank of India (SBI)",
+    "Branch": "Khardaha Branch, West Bengal",
+    "Account Number": "123456789012",
+    "IFSC Code": "SBIN0001234",
+    "UPI ID": "alumniassoc@sbi",
 }
+
+CONTACT_INFO = {
+    "address": "123 College Road, Campus Building, Kolkata - 700117, West Bengal",
+    "phone": "+91 98765 43210",
+    "email": "contact@alumniassoc.org",
+}
+
+# --- 5. HEADER & NAVIGATION ---
+st.markdown(
+    f"""
+    <div class="top-nav-banner">
+        <div>
+            <h2>🐾 WBSU Zoology Alumni Association</h2>
+            <p>Exploring Biodiversity • Mentorship &amp; Research • Giving Back to Our Alma Mater</p>
+        </div>
+        <div>{ZOOLOGY_HEADER_SVG}</div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.sidebar.title("Navigation")
+page = st.sidebar.radio(
+    "Go to",
+    ["Cover Page", "Alumni Corner", "Events", "Support Us", "ZIP Image Mapper"],
+)
+
+use_gh = st.sidebar.checkbox("Fetch ZIPs from GitHub if not local", value=True)
+all_extracted_imgs = extract_images_from_zips(ZIP_FILENAMES, use_github_fallback=use_gh)
+st.sidebar.caption(f"Extracted images found: {len(all_extracted_imgs)}")
+
+if "img_map" not in st.session_state:
+    def pick(i: int) -> str | None:
+        return all_extracted_imgs[i % len(all_extracted_imgs)] if all_extracted_imgs else None
+
+    st.session_state.img_map = {
+        "slides": all_extracted_imgs[:3] if len(all_extracted_imgs) >= 3 else all_extracted_imgs,
+        "committee": [pick(i) for i in range(len(COMMITTEE_MEMBERS))],
+        "notable": [pick(i + 4) for i in range(len(NOTABLE_ALUMNI))],
+        "events": [pick(i + 7) for i in range(len(EVENTS_DATA))],
+    }
+
+
+def show_img(path: str | None, caption: str | None = None):
+    if path and os.path.exists(path):
+        st.image(path, caption=caption, use_container_width=True)
+    else:
+        st.info("No image assigned yet (open ZIP Image Mapper)")
+
+
+def render_footer():
+    st.markdown(ZOOLOGY_RIBBON_SVG, unsafe_allow_html=True)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown(
+            '<div class="blue-card"><strong>Zoology Alumni Association</strong><br>'
+            '<span class="muted-text">Uniting past, present, and future generations of naturalists &amp; scholars.</span></div>',
+            unsafe_allow_html=True,
+        )
+    with c2:
+        st.markdown(
+            f'<div class="blue-card"><strong>Address</strong><br>'
+            f'<span class="muted-text">{CONTACT_INFO["address"]}</span></div>',
+            unsafe_allow_html=True,
+        )
+    with c3:
+        st.markdown(
+            f'<div class="blue-card"><strong>Contact</strong><br>'
+            f'<span class="muted-text">Email: {CONTACT_INFO["email"]}<br>'
+            f'Phone: {CONTACT_INFO["phone"]}</span></div>',
+            unsafe_allow_html=True,
+        )
+
+
+# --- 6. PAGES ---
+if page == "Cover Page":
+    slides = [p for p in st.session_state.img_map["slides"] if p and os.path.exists(p)]
+    auto_slide = st.sidebar.checkbox("Auto-play slideshow", value=False)
+    slot = st.empty()
+
+    if slides:
+        if auto_slide:
+            for idx, img_path in enumerate(slides):
+                with slot.container():
+                    st.image(img_path, caption=f"Field & Campus Highlight {idx + 1}", use_container_width=True)
+                time.sleep(3)
+                st.rerun()
+        else:
+            s_idx = st.slider("Slide through highlights", 1, len(slides), 1)
+            with slot.container():
+                st.image(slides[s_idx - 1], caption=f"Field & Campus Highlight {s_idx} of {len(slides)}", use_container_width=True)
+    else:
+        st.info("Add the ZIP files to `Images/` or `zips/` and pick slideshow images in **ZIP Image Mapper**.")
+
+    render_zoo_divider("Who Are We & Our Vision")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown(
+            """
+            <div class="blue-card">
+                <h3>Who Are We?</h3>
+                <p>We are a registered body of former students dedicated to maintaining a lifelong bond
+                between the institution and its graduates. Our association connects batches across years,
+                bringing together researchers, conservationists, educators, and leaders on one platform.</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with c2:
+        st.markdown(
+            """
+            <div class="blue-card">
+                <h3>Our Vision</h3>
+                <p>Our vision is to build a vibrant, supportive alumni community that actively contributes
+                to student welfare, zoological research excellence, biodiversity awareness, and social impact
+                through mentorship, scholarships, and collaborative initiatives.</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    render_zoo_divider("Who's Who")
+    cols = st.columns(4)
+    for idx, member in enumerate(COMMITTEE_MEMBERS):
+        with cols[idx % 4]:
+            show_img(st.session_state.img_map["committee"][idx], caption=member["role"])
+            st.markdown(
+                f"""
+                <div class="blue-card">
+                    <span class="role-badge">{member["role"]}</span><br>
+                    <strong>{member["name"]}</strong><br>
+                    <span class="muted-text">{member["email"]}</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+    render_footer()
+
+elif page == "Alumni Corner":
+    st.header("Alumni Corner")
+
+    render_zoo_divider("Notable Alumni")
+    n_cols = st.columns(3)
+    for idx, alum in enumerate(NOTABLE_ALUMNI):
+        with n_cols[idx % 3]:
+            show_img(st.session_state.img_map["notable"][idx], caption=alum["name"])
+            st.markdown(
+                f"""
+                <div class="blue-card">
+                    <span class="role-badge">Distinguished Alumnus/Alumna</span><br>
+                    <strong>{alum["name"]}</strong><br>
+                    <span>{alum["position"]}</span><br>
+                    <span class="muted-text">{alum["email"]}</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+    render_zoo_divider("Year-by-Year Alumni Directory (PDF)")
+    p_cols = st.columns(2)
+    for idx, item in enumerate(ALUMNI_PDFS):
+        with p_cols[idx % 2]:
+            st.markdown(
+                f'<div class="blue-card"><strong>{item["year"]}</strong><br>'
+                f'<span class="muted-text">Student Names &amp; Email IDs</span></div>',
+                unsafe_allow_html=True,
+            )
+            if os.path.exists(item["file"]):
+                with open(item["file"], "rb") as f:
+                    st.download_button(
+                        label=f"Download {item['year']} PDF",
+                        data=f.read(),
+                        file_name=os.path.basename(item["file"]),
+                        mime="application/pdf",
+                        key=f"dl_{idx}",
+                    )
+            else:
+                st.caption(f"Add `{item['file']}` to enable download.")
+
+    render_footer()
+
+elif page == "Events":
+    st.header("Our Events & Initiatives")
+    for idx, event in enumerate(EVENTS_DATA):
+        render_zoo_divider(f"Initiative {idx + 1}")
+        c1, c2 = st.columns([1, 2])
+        with c1:
+            show_img(st.session_state.img_map["events"][idx], caption=event["title"])
+        with c2:
+            st.markdown(
+                f"""
+                <div class="blue-card">
+                    <h3>{event["title"]}</h3>
+                    <p>{event["description"]}</p>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+    render_footer()
+
+elif page == "Support Us":
+    st.header("Support Us")
+    st.markdown(
+        """
+        <div class="blue-card">
+            <p>Your generous contributions help fund student scholarships, zoological field seminars,
+            ecological initiatives, and campus welfare programmes.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    render_zoo_divider("Official Bank Account Details")
+    for k, v in BANK_DETAILS.items():
+        l, r = st.columns([1, 2])
+        l.markdown(f"**{k}**")
+        r.code(v, language=None)
+
+    render_footer()
+
+elif page == "ZIP Image Mapper":
+    st.header("Assign Extracted ZIP Images")
+    if not all_extracted_imgs:
+        st.warning("No images extracted yet. Place `.zip` files in `Images/` or `zips/` and push to GitHub.")
+        st.stop()
+
+    options = all_extracted_imgs
+    st.session_state.img_map["slides"] = st.multiselect(
+        "Slideshow Images",
+        options=options,
+        default=[p for p in st.session_state.img_map["slides"] if p in options],
+    )
+
+    for i, m in enumerate(COMMITTEE_MEMBERS):
+        cur = st.session_state.img_map["committee"][i]
+        idx = options.index(cur) if cur in options else 0
+        st.session_state.img_map["committee"][i] = st.selectbox(
+            f"Committee — {m['role']} ({m['name']})", options, index=idx, key=f"c_{i}"
+        )
+
+    for i, a in enumerate(NOTABLE_ALUMNI):
+        cur = st.session_state.img_map["notable"][i]
+        idx = options.index(cur) if cur in options else 0
+        st.session_state.img_map["notable"][i] = st.selectbox(
+            f"Notable Alumni — {a['name']}", options, index=idx, key=f"n_{i}"
+        )
+
+    for i, e in enumerate(EVENTS_DATA):
+        cur = st.session_state.img_map["events"][i]
+        idx = options.index(cur) if cur in options else 0
+        st.session_state.img_map["events"][i] = st.selectbox(
+            f"Event — {e['title']}", options, index=idx, key=f"e_{i}"
+        )
