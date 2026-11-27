@@ -37,47 +37,45 @@ if "current_page" not in st.session_state:
     st.session_state.current_page = "Cover Page"
 
 if "ui_theme" not in st.session_state:
-    st.session_state.ui_theme = "Sky Light"
+    st.session_state.ui_theme = "Light"
 
 LIGHT_PALETTE = """
-    --bg-gradient: linear-gradient(160deg, #cbe6ff 0%, #e5f2ff 52%, #cfe8ff 100%);
+    --bg-gradient: linear-gradient(160deg, #cce6ff 0%, #e5f2ff 52%, #d2e9ff 100%);
     --card-bg: #f5faff;
-    --card-border: #7cbaf2;
-    --contact-bg: #b8dcff;
-    --contact-border: #3788d4;
-    --contact-accent: #073f70;
-    --text-main: #082038;
-    --text-muted: #244b73;
-    --accent: #105eb3;
-    --accent-soft: #c7e2ff;
-    --menu-btn-bg: #0a4475;
-    --menu-btn-hover: #145e9e;
+    --card-border: #82bff5;
+    --contact-bg: #bfe0ff;
+    --contact-border: #3f91db;
+    --contact-accent: #084275;
+    --text-main: #09223b;
+    --text-muted: #285078;
+    --accent: #1261b5;
+    --accent-soft: #cbe4ff;
+    --menu-btn-bg: #0c477a;
+    --menu-btn-hover: #1662a3;
     --menu-btn-text: #ffffff;
-    --overlay-bg: #edf6ff;
-    --banner-grad: linear-gradient(120deg, #0b335e 0%, #155391 58%, #1f70bd 100%);
-    --shadow-soft: 0 8px 22px rgba(8, 32, 56, 0.12);
+    --overlay-bg: #eef7ff;
+    --shadow-soft: 0 8px 22px rgba(9, 34, 59, 0.10);
 """
 
 DARK_PALETTE = """
-    --bg-gradient: linear-gradient(160deg, #040e1c 0%, #081930 52%, #051224 100%);
-    --card-bg: #0e2744;
-    --card-border: #2a5c94;
-    --contact-bg: #14375e;
-    --contact-border: #4688cf;
+    --bg-gradient: linear-gradient(160deg, #051121 0%, #091b33 52%, #061426 100%);
+    --card-bg: #0f2947;
+    --card-border: #2b5d94;
+    --contact-bg: #153961;
+    --contact-border: #4789cf;
     --contact-accent: #8ccbff;
-    --text-main: #ebf5ff;
-    --text-muted: #a6c9eb;
+    --text-main: #eaf4ff;
+    --text-muted: #a9cbed;
     --accent: #66b5ff;
     --accent-soft: #16375c;
-    --menu-btn-bg: #1b5899;
-    --menu-btn-hover: #286fbd;
-    --menu-btn-text: #ffffff;
-    --overlay-bg: #0c223d;
-    --banner-grad: linear-gradient(120deg, #040d1a 0%, #0b2645 58%, #133b69 100%);
-    --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.50);
+    --menu-btn-bg: #66b5ff;
+    --menu-btn-hover: #8ccbff;
+    --menu-btn-text: #061426;
+    --overlay-bg: #0d2440;
+    --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.45);
 """
 
-active_vars = DARK_PALETTE if st.session_state.ui_theme == "Deep Dark" else LIGHT_PALETTE
+active_vars = DARK_PALETTE if st.session_state.ui_theme == "Dark" else LIGHT_PALETTE
 
 st.markdown(
     f"""
@@ -91,7 +89,6 @@ st.markdown(
             display: none !important;
         }}
 
-        /* Force full-screen theme gradient & font colors across Streamlit wrappers */
         html, body,
         .stApp,
         [data-testid="stAppViewContainer"],
@@ -105,46 +102,21 @@ st.markdown(
             color: var(--text-main) !important;
         }}
 
-        .stApp [data-testid="stMarkdownContainer"] p,
-        .stApp [data-testid="stMarkdownContainer"] li,
-        .stApp [data-testid="stMarkdownContainer"] h1,
-        .stApp [data-testid="stMarkdownContainer"] h2,
-        .stApp [data-testid="stMarkdownContainer"] h3,
-        .stApp [data-testid="stMarkdownContainer"] h4,
-        .stApp [data-testid="stMarkdownContainer"] span,
-        .stApp [data-testid="stMarkdownContainer"] strong,
-        .stApp [data-testid="stWidgetLabel"] label,
-        .stApp [data-testid="stRadio"] label p,
-        .stApp [data-testid="stRadio"] label span {{
+        .stApp *,
+        [data-testid="stMarkdownContainer"] *,
+        [data-testid="stWidgetLabel"] *,
+        [data-testid="stRadio"] * {{
+            color: var(--text-main);
+        }}
+
+        h1, h2, h3, h4, h5, h6 {{
             color: var(--text-main) !important;
         }}
 
-        /* Compact floating top-right MENU button (< / >) with 10px padding */
-        .wbsu-top-menu-btn {{
-            position: fixed;
-            top: 12px;
-            right: 16px;
-            z-index: 999999;
-            background-color: var(--menu-btn-bg);
-            color: var(--menu-btn-text);
-            border: 1.5px solid var(--card-border);
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 13px;
-            font-weight: 800;
-            line-height: 1;
-            cursor: pointer;
-            box-shadow: var(--shadow-soft);
-        }}
-
-        .wbsu-top-menu-btn:hover {{
-            background-color: var(--menu-btn-hover);
-        }}
-
-        /* Style the Streamlit toggle button itself if used */
+        /* Top-right MENU button (<MENU / MENU>) with 10px padding and theme-reactive colours */
         .st-key-menu_toggle_btn {{
             position: fixed !important;
-            top: 52px !important;
+            top: 48px !important;
             right: 16px !important;
             z-index: 999998 !important;
             width: auto !important;
@@ -157,6 +129,7 @@ st.markdown(
             border: 1.5px solid var(--card-border) !important;
             border-radius: 8px !important;
             padding: 10px !important;
+            margin: 0 !important;
             font-size: 0.78rem !important;
             font-weight: 800 !important;
             line-height: 1 !important;
@@ -165,18 +138,29 @@ st.markdown(
             height: auto !important;
             width: auto !important;
             box-shadow: var(--shadow-soft) !important;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
         }}
 
-        .st-key-menu_toggle_btn button * {{
+        .st-key-menu_toggle_btn button *,
+        .st-key-menu_toggle_btn button p,
+        .st-key-menu_toggle_btn button span,
+        .st-key-menu_toggle_btn button div {{
             color: var(--menu-btn-text) !important;
             padding: 0 !important;
             margin: 0 !important;
+            font-size: 0.78rem !important;
+            line-height: 1 !important;
+        }}
+
+        .st-key-menu_toggle_btn button:hover {{
+            background-color: var(--menu-btn-hover) !important;
+            color: var(--menu-btn-text) !important;
         }}
 
         /* Floating overlay box over current page content */
         .st-key-menu_overlay_container {{
             position: fixed !important;
-            top: 98px !important;
+            top: 96px !important;
             right: 16px !important;
             width: 235px !important;
             z-index: 999997 !important;
@@ -209,7 +193,7 @@ st.markdown(
         }}
 
         @media (prefers-reduced-motion: reduce) {{
-            .zoo-float, .zoo-pulse, .blue-card, .contact-card, .top-nav-banner, .auto-scroll-track {{
+            .zoo-float, .zoo-pulse, .blue-card, .contact-card, .hero-title-wrap, .auto-scroll-track {{
                 animation: none !important;
                 transition: none !important;
             }}
@@ -224,13 +208,9 @@ st.markdown(
             animation: pulseRipple 3.8s ease-in-out infinite;
         }}
 
-        .top-nav-banner {{
-            background: var(--banner-grad) !important;
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 18px 24px;
-            margin-bottom: 18px;
-            box-shadow: var(--shadow-soft);
+        .hero-title-wrap {{
+            padding: 8px 4px 12px 4px;
+            margin-bottom: 14px;
             animation: fadeSlideUp 0.55s ease-out both;
             display: flex;
             align-items: center;
@@ -238,11 +218,20 @@ st.markdown(
             gap: 16px;
         }}
 
-        .top-nav-banner h2,
-        .top-nav-banner p,
-        .top-nav-banner span {{
-            color: #f4faff !important;
+        .hero-title-text h1 {{
+            color: var(--text-main) !important;
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin: 0 0 6px 0;
+            line-height: 1.2;
+        }}
+
+        .hero-title-text p {{
+            color: var(--text-muted) !important;
+            font-size: 1.02rem;
+            font-weight: 500;
             margin: 0;
+            line-height: 1.45;
         }}
 
         .auto-scroll-wrapper {{
@@ -381,16 +370,16 @@ st.markdown(
 
 # --- 3. ZOOLOGY SVG GRAPHICS ---
 ZOOLOGY_HEADER_SVG = """
-<svg width="92" height="64" viewBox="0 0 92 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="zoo-float" aria-label="Zoology emblem">
-  <path d="M46 32C36 16 14 10 10 24C7 34 22 40 46 32Z" fill="#7CC4FA" fill-opacity="0.35" stroke="#BDE0FE" stroke-width="2"/>
-  <path d="M46 32C56 16 78 10 82 24C85 34 70 40 46 32Z" fill="#7CC4FA" fill-opacity="0.35" stroke="#BDE0FE" stroke-width="2"/>
-  <path d="M46 32C34 34 20 44 26 53C31 60 42 48 46 32Z" fill="#4EA8DE" fill-opacity="0.4" stroke="#90E0EF" stroke-width="2"/>
-  <path d="M46 32C58 34 72 44 66 53C61 60 50 48 46 32Z" fill="#4EA8DE" fill-opacity="0.4" stroke="#90E0EF" stroke-width="2"/>
-  <line x1="46" y1="15" x2="46" y2="52" stroke="#E6F1FC" stroke-width="2.4" stroke-linecap="round"/>
-  <path d="M46 16C42 10 37 8 34 9" stroke="#E6F1FC" stroke-width="1.8" stroke-linecap="round"/>
-  <path d="M46 16C50 10 55 8 58 9" stroke="#E6F1FC" stroke-width="1.8" stroke-linecap="round"/>
-  <circle cx="24" cy="25" r="3.5" fill="#E6F1FC" fill-opacity="0.75"/>
-  <circle cx="68" cy="25" r="3.5" fill="#E6F1FC" fill-opacity="0.75"/>
+<svg width="86" height="58" viewBox="0 0 92 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="zoo-float" aria-label="Zoology emblem">
+  <path d="M46 32C36 16 14 10 10 24C7 34 22 40 46 32Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="2"/>
+  <path d="M46 32C56 16 78 10 82 24C85 34 70 40 46 32Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="2"/>
+  <path d="M46 32C34 34 20 44 26 53C31 60 42 48 46 32Z" fill="currentColor" fill-opacity="0.24" stroke="currentColor" stroke-width="2"/>
+  <path d="M46 32C58 34 72 44 66 53C61 60 50 48 46 32Z" fill="currentColor" fill-opacity="0.24" stroke="currentColor" stroke-width="2"/>
+  <line x1="46" y1="15" x2="46" y2="52" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M46 16C42 10 37 8 34 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M46 16C50 10 55 8 58 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="24" cy="25" r="3.5" fill="currentColor" fill-opacity="0.75"/>
+  <circle cx="68" cy="25" r="3.5" fill="currentColor" fill-opacity="0.75"/>
 </svg>
 """
 
@@ -576,8 +565,8 @@ CONTACT_INFO = {
     "email": "contact@alumniassoc.org",
 }
 
-# --- 6. TINY TOP-RIGHT OVERLAY MENU TOGGLE ---
-btn_label = ">" if st.session_state.menu_expanded else "<"
+# --- 6. TOP-RIGHT MENU BUTTON (<MENU / MENU>) & OVERLAY ---
+btn_label = "MENU>" if st.session_state.menu_expanded else "<MENU"
 if st.button(btn_label, key="menu_toggle_btn", help="Open or close MENU"):
     st.session_state.menu_expanded = not st.session_state.menu_expanded
     st.rerun()
@@ -592,9 +581,9 @@ if st.session_state.menu_expanded:
             key="top_right_nav_radio",
         )
         selected_theme = st.radio(
-            "Theme Tint",
-            ["Sky Light", "Deep Dark"],
-            index=["Sky Light", "Deep Dark"].index(st.session_state.ui_theme),
+            "Theme",
+            ["Light", "Dark"],
+            index=["Light", "Dark"].index(st.session_state.ui_theme),
             key="top_right_theme_radio",
         )
         state_changed = False
@@ -609,12 +598,12 @@ if st.session_state.menu_expanded:
 
 page = st.session_state.current_page
 
-# --- 7. BANNER & FOOTER ---
+# --- 7. BANNERLESS HEADER & FOOTER ---
 st.markdown(
     f"""
-    <div class="top-nav-banner">
-        <div>
-            <h2>🐾 WBSU Zoology Alumni Association</h2>
+    <div class="hero-title-wrap">
+        <div class="hero-title-text">
+            <h1>🐾 WBSU Zoology Alumni Association</h1>
             <p>Exploring Biodiversity • Mentorship &amp; Research • Giving Back to Our Alma Mater</p>
         </div>
         <div>{ZOOLOGY_HEADER_SVG}</div>
