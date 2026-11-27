@@ -29,189 +29,181 @@ ZIP_FILENAMES = [
 GITHUB_RAW_ZIP_BASE = "https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
-# --- 2. SKY-BLUE LIGHT TINT <-> RECIPROCAL DARK TINT + OVERLAY MENU ---
-st.markdown(
-    """
-    <style>
-        :root {
-            /* Light Mode: Sky Blue Tint */
-            --bg-gradient: linear-gradient(160deg, #cfe8ff 0%, #e6f3ff 52%, #d6ecff 100%);
-            --card-bg: rgba(242, 250, 255, 0.94);
-            --card-border: #8ec5f5;
-            --contact-bg: rgba(196, 228, 255, 0.96);
-            --contact-border: #4d9de0;
-            --contact-accent: #0b4a82;
-            --text-main: #0b2540;
-            --text-muted: #2d567d;
-            --accent: #1464b8;
-            --accent-soft: #cde6ff;
-            --menu-btn-bg: #0f4c81;
-            --menu-btn-hover: #1866ab;
-            --menu-btn-text: #ffffff;
-            --overlay-bg: rgba(235, 247, 255, 0.98);
-            --banner-grad: linear-gradient(120deg, #0c3561 0%, #165696 58%, #2074c4 100%);
-            --shadow-soft: 0 8px 24px rgba(11, 37, 64, 0.10);
-        }
+# --- 2. SESSION STATE FOR MENU, PAGE & THEME ---
+if "menu_expanded" not in st.session_state:
+    st.session_state.menu_expanded = False
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* Dark Mode: Reciprocal Deep Midnight Blue Tint */
-                --bg-gradient: linear-gradient(160deg, #061324 0%, #0a1e36 52%, #071629 100%);
-                --card-bg: rgba(12, 31, 54, 0.95);
-                --card-border: #28578a;
-                --contact-bg: rgba(16, 44, 74, 0.96);
-                --contact-border: #3d7ec2;
-                --contact-accent: #82c7ff;
-                --text-main: #e8f4ff;
-                --text-muted: #a6c9eb;
-                --accent: #63b3ff;
-                --accent-soft: #17385e;
-                --menu-btn-bg: #1b5694;
-                --menu-btn-hover: #286eb8;
-                --menu-btn-text: #ffffff;
-                --overlay-bg: rgba(10, 27, 48, 0.98);
-                --banner-grad: linear-gradient(120deg, #051120 0%, #0d2b4d 58%, #154170 100%);
-                --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.45);
-            }
-        }
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "Cover Page"
+
+if "ui_theme" not in st.session_state:
+    st.session_state.ui_theme = "Sky Light"
+
+LIGHT_PALETTE = """
+    --bg-gradient: linear-gradient(160deg, #cce6ff 0%, #e5f2ff 52%, #d2e9ff 100%);
+    --card-bg: #f5faff;
+    --card-border: #82bff5;
+    --contact-bg: #bfe0ff;
+    --contact-border: #3f91db;
+    --contact-accent: #084275;
+    --text-main: #09223b;
+    --text-muted: #285078;
+    --accent: #1261b5;
+    --accent-soft: #cbe4ff;
+    --menu-btn-bg: #0c477a;
+    --menu-btn-hover: #1662a3;
+    --menu-btn-text: #ffffff;
+    --overlay-bg: #eef7ff;
+    --banner-grad: linear-gradient(120deg, #0b335e 0%, #155391 58%, #1f70bd 100%);
+    --shadow-soft: 0 8px 22px rgba(9, 34, 59, 0.10);
+"""
+
+DARK_PALETTE = """
+    --bg-gradient: linear-gradient(160deg, #051121 0%, #091b33 52%, #061426 100%);
+    --card-bg: #0f2947;
+    --card-border: #2b5d94;
+    --contact-bg: #153961;
+    --contact-border: #4789cf;
+    --contact-accent: #8ccbff;
+    --text-main: #eaf4ff;
+    --text-muted: #a9cbed;
+    --accent: #66b5ff;
+    --accent-soft: #16375c;
+    --menu-btn-bg: #1c5a9c;
+    --menu-btn-hover: #2972bf;
+    --menu-btn-text: #ffffff;
+    --overlay-bg: #0d2440;
+    --banner-grad: linear-gradient(120deg, #040e1c 0%, #0b2645 58%, #133b69 100%);
+    --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.45);
+"""
+
+active_vars = DARK_PALETTE if st.session_state.ui_theme == "Deep Dark" else LIGHT_PALETTE
+
+st.markdown(
+    f"""
+    <style>
+        :root {{
+            {active_vars}
+        }}
 
         [data-testid="stSidebar"],
-        [data-testid="stSidebarCollapseButton"] {
+        [data-testid="stSidebarCollapseButton"] {{
             display: none !important;
-        }
+        }}
 
         .stApp,
         [data-testid="stAppViewContainer"],
-        [data-testid="stHeader"] {
+        [data-testid="stHeader"],
+        [data-testid="stToolbar"],
+        [data-testid="stDecoration"] {{
             background: var(--bg-gradient) !important;
             color: var(--text-main) !important;
-        }
+        }}
 
-        .stApp,
-        .stApp p,
-        .stApp span,
-        .stApp div,
-        .stApp label,
-        .stApp li,
-        [data-testid="stMarkdownContainer"],
-        [data-testid="stMarkdownContainer"] * {
+        .stApp *,
+        [data-testid="stMarkdownContainer"] *,
+        [data-testid="stWidgetLabel"] *,
+        [data-testid="stRadio"] * {{
             color: var(--text-main);
-        }
+        }}
 
-        h1, h2, h3, h4, h5, h6 {
+        h1, h2, h3, h4, h5, h6 {{
             color: var(--text-main) !important;
-        }
+        }}
 
-        /* Compact top-right MENU button with 10px padding and crisp visible text */
-        .st-key-menu_toggle_btn {
+        /* Tiny top-right toggle button with 10px padding */
+        .st-key-menu_toggle_btn {{
             position: fixed !important;
-            top: 16px !important;
-            right: 22px !important;
-            z-index: 10000 !important;
+            top: 14px !important;
+            right: 18px !important;
+            z-index: 10001 !important;
             width: auto !important;
-        }
+            min-width: 0 !important;
+        }}
 
-        .st-key-menu_toggle_btn button,
-        .st-key-menu_toggle_btn button *,
-        div[data-testid="stButton"] > button[kind="secondary"] {
+        .st-key-menu_toggle_btn button {{
             background-color: var(--menu-btn-bg) !important;
             color: var(--menu-btn-text) !important;
             border: 1.5px solid var(--card-border) !important;
-            border-radius: 10px !important;
+            border-radius: 8px !important;
             padding: 10px !important;
-            font-size: 0.85rem !important;
+            margin: 0 !important;
+            font-size: 0.78rem !important;
             font-weight: 800 !important;
             line-height: 1 !important;
             min-height: 0 !important;
+            min-width: 0 !important;
             height: auto !important;
             width: auto !important;
             box-shadow: var(--shadow-soft) !important;
-            cursor: pointer !important;
-        }
+        }}
 
-        .st-key-menu_toggle_btn button:hover {
-            background-color: var(--menu-btn-hover) !important;
+        .st-key-menu_toggle_btn button p,
+        .st-key-menu_toggle_btn button span,
+        .st-key-menu_toggle_btn button div {{
             color: var(--menu-btn-text) !important;
-        }
+            padding: 0 !important;
+            margin: 0 !important;
+            font-size: 0.78rem !important;
+            line-height: 1 !important;
+        }}
 
-        /* Floating overlay panel over current page content when expanded */
-        .st-key-menu_overlay_container {
+        .st-key-menu_toggle_btn button:hover {{
+            background-color: var(--menu-btn-hover) !important;
+        }}
+
+        /* Floating overlay box over current page content */
+        .st-key-menu_overlay_container {{
             position: fixed !important;
-            top: 62px !important;
-            right: 22px !important;
-            width: 245px !important;
-            z-index: 9999 !important;
+            top: 56px !important;
+            right: 18px !important;
+            width: 240px !important;
+            z-index: 10000 !important;
             background: var(--overlay-bg) !important;
             border: 1.5px solid var(--card-border) !important;
             border-radius: 14px !important;
             padding: 14px 16px !important;
-            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28) !important;
-        }
-
-        .st-key-menu_overlay_container label,
-        .st-key-menu_overlay_container span,
-        .st-key-menu_overlay_container p {
-            color: var(--text-main) !important;
-        }
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32) !important;
+        }}
 
         /* Zoology & Auto-Scroll Animations */
-        @keyframes floatSpecimen {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-7px) rotate(2.5deg);
-            }
-        }
+        @keyframes floatSpecimen {{
+            0%, 100% {{ transform: translateY(0px) rotate(0deg); }}
+            50% {{ transform: translateY(-7px) rotate(2.5deg); }}
+        }}
 
-        @keyframes pulseRipple {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.75;
-            }
-            50% {
-                transform: scale(1.06);
-                opacity: 1;
-            }
-        }
+        @keyframes pulseRipple {{
+            0%, 100% {{ transform: scale(1); opacity: 0.75; }}
+            50% {{ transform: scale(1.06); opacity: 1; }}
+        }}
 
-        @keyframes fadeSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeSlideUp {{
+            from {{ opacity: 0; transform: translateY(10px); }}
+            to {{ opacity: 1; transform: translateY(0); }}
+        }}
 
-        @keyframes scrollAcrossScreen {
-            0% {
-                transform: translateX(0%);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
+        @keyframes scrollAcrossScreen {{
+            0% {{ transform: translateX(0%); }}
+            100% {{ transform: translateX(-50%); }}
+        }}
 
-        @media (prefers-reduced-motion: reduce) {
-            .zoo-float, .zoo-pulse, .blue-card, .contact-card, .top-nav-banner, .auto-scroll-track {
+        @media (prefers-reduced-motion: reduce) {{
+            .zoo-float, .zoo-pulse, .blue-card, .contact-card, .top-nav-banner, .auto-scroll-track {{
                 animation: none !important;
                 transition: none !important;
-            }
-        }
+            }}
+        }}
 
-        .zoo-float {
+        .zoo-float {{
             animation: floatSpecimen 5.5s ease-in-out infinite;
             display: inline-block;
-        }
+        }}
 
-        .zoo-pulse {
+        .zoo-pulse {{
             animation: pulseRipple 3.8s ease-in-out infinite;
-        }
+        }}
 
-        .top-nav-banner {
+        .top-nav-banner {{
             background: var(--banner-grad) !important;
             border: 1px solid var(--card-border);
             border-radius: 16px;
@@ -223,16 +215,16 @@ st.markdown(
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-        }
+        }}
 
         .top-nav-banner h2,
         .top-nav-banner p,
-        .top-nav-banner span {
+        .top-nav-banner span {{
             color: #f4faff !important;
             margin: 0;
-        }
+        }}
 
-        .auto-scroll-wrapper {
+        .auto-scroll-wrapper {{
             width: 100%;
             overflow: hidden;
             border-radius: 16px;
@@ -241,22 +233,22 @@ st.markdown(
             box-shadow: var(--shadow-soft);
             padding: 14px 0;
             margin-bottom: 16px;
-        }
+        }}
 
-        .auto-scroll-track {
+        .auto-scroll-track {{
             display: flex;
             width: max-content;
             gap: 16px;
             animation-name: scrollAcrossScreen;
             animation-timing-function: linear;
             animation-iteration-count: infinite;
-        }
+        }}
 
-        .auto-scroll-wrapper:hover .auto-scroll-track {
+        .auto-scroll-wrapper:hover .auto-scroll-track {{
             animation-play-state: paused;
-        }
+        }}
 
-        .scroll-slide-card {
+        .scroll-slide-card {{
             flex: 0 0 auto;
             width: 310px;
             height: 215px;
@@ -264,16 +256,16 @@ st.markdown(
             overflow: hidden;
             border: 1px solid var(--card-border);
             background: var(--accent-soft);
-        }
+        }}
 
-        .scroll-slide-card img {
+        .scroll-slide-card img {{
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-        }
+        }}
 
-        .blue-card {
+        .blue-card {{
             background-color: var(--card-bg) !important;
             border: 1px solid var(--card-border);
             border-left: 4px solid var(--accent);
@@ -282,28 +274,28 @@ st.markdown(
             margin-bottom: 14px;
             color: var(--text-main) !important;
             box-shadow: var(--shadow-soft);
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            transition: transform 0.25s ease, border-color 0.25s ease;
             animation: fadeSlideUp 0.45s ease-out both;
-        }
+        }}
 
-        .blue-card:hover {
+        .blue-card:hover {{
             transform: translateY(-4px);
             border-color: var(--accent);
-        }
+        }}
 
         .blue-card h3,
         .blue-card strong,
-        .blue-card p {
+        .blue-card p {{
             color: var(--text-main) !important;
             line-height: 1.65;
-        }
+        }}
 
-        .blue-card p {
+        .blue-card p {{
             margin-bottom: 0;
-        }
+        }}
 
         /* Distinct colour styling for the Contact section */
-        .contact-card {
+        .contact-card {{
             background-color: var(--contact-bg) !important;
             border: 1.5px solid var(--contact-border);
             border-top: 5px solid var(--contact-accent);
@@ -314,27 +306,27 @@ st.markdown(
             box-shadow: var(--shadow-soft);
             transition: transform 0.25s ease, border-color 0.25s ease;
             animation: fadeSlideUp 0.45s ease-out both;
-        }
+        }}
 
-        .contact-card:hover {
+        .contact-card:hover {{
             transform: translateY(-3px);
             border-color: var(--contact-accent);
-        }
+        }}
 
-        .contact-title {
+        .contact-title {{
             color: var(--contact-accent) !important;
             font-weight: 800;
             font-size: 1.02rem;
             display: block;
             margin-bottom: 6px;
-        }
+        }}
 
-        .muted-text {
+        .muted-text {{
             color: var(--text-muted) !important;
             font-size: 0.92rem;
-        }
+        }}
 
-        .role-badge {
+        .role-badge {{
             display: inline-block;
             background-color: var(--accent-soft) !important;
             color: var(--accent) !important;
@@ -345,22 +337,22 @@ st.markdown(
             border-radius: 999px;
             margin-bottom: 8px;
             border: 1px solid var(--card-border);
-        }
+        }}
 
-        .zoo-divider {
+        .zoo-divider {{
             display: flex;
             align-items: center;
             gap: 12px;
             margin: 22px 0 14px 0;
-        }
+        }}
 
         .zoo-divider::before,
-        .zoo-divider::after {
+        .zoo-divider::after {{
             content: "";
             flex: 1;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--card-border), transparent);
-        }
+        }}
     </style>
     """,
     unsafe_allow_html=True,
@@ -563,29 +555,35 @@ CONTACT_INFO = {
     "email": "contact@alumniassoc.org",
 }
 
-# --- 6. TOP-RIGHT OVERLAY MENU TOGGLE ---
-if "menu_expanded" not in st.session_state:
-    st.session_state.menu_expanded = False
-
-if "current_page" not in st.session_state:
-    st.session_state.current_page = "Cover Page"
-
-btn_label = "MENU>" if st.session_state.menu_expanded else "<MENU "
-if st.button(btn_label, key="menu_toggle_btn"):
+# --- 6. TINY TOP-RIGHT OVERLAY MENU TOGGLE ---
+btn_label = ">" if st.session_state.menu_expanded else "<"
+if st.button(btn_label, key="menu_toggle_btn", help="Open or close MENU"):
     st.session_state.menu_expanded = not st.session_state.menu_expanded
     st.rerun()
 
 if st.session_state.menu_expanded:
     with st.container(key="menu_overlay_container"):
-        st.markdown("**Navigation**")
+        st.markdown("**MENU**")
         selected_page = st.radio(
-            "Go to",
+            "Page",
             ["Cover Page", "Alumni Corner", "Events", "Support Us"],
             index=["Cover Page", "Alumni Corner", "Events", "Support Us"].index(st.session_state.current_page),
             key="top_right_nav_radio",
         )
+        selected_theme = st.radio(
+            "Theme Tint",
+            ["Sky Light", "Deep Dark"],
+            index=["Sky Light", "Deep Dark"].index(st.session_state.ui_theme),
+            key="top_right_theme_radio",
+        )
+        state_changed = False
         if selected_page != st.session_state.current_page:
             st.session_state.current_page = selected_page
+            state_changed = True
+        if selected_theme != st.session_state.ui_theme:
+            st.session_state.ui_theme = selected_theme
+            state_changed = True
+        if state_changed:
             st.rerun()
 
 page = st.session_state.current_page
