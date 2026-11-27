@@ -97,7 +97,7 @@ st.markdown(
             }
         }
 
-        /* Continuous horizontal auto-scroll across the screen */
+        /* Continuous slow horizontal auto-scroll across the screen */
         @keyframes scrollAcrossScreen {
             0% {
                 transform: translateX(0%);
@@ -159,7 +159,9 @@ st.markdown(
             display: flex;
             width: max-content;
             gap: 16px;
-            animation: scrollAcrossScreen 36s linear infinite;
+            animation-name: scrollAcrossScreen;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
         }
 
         .auto-scroll-wrapper:hover .auto-scroll-track {
@@ -293,7 +295,7 @@ def render_zoo_divider(label: str):
     )
 
 
-# --- 4. ZIP EXTRACTION & AUTO-SCROLL STRIP ---
+# --- 4. ZIP EXTRACTION & SLOW AUTO-SCROLL STRIP ---
 @st.cache_data(show_spinner="Extracting images from all ZIP archives...")
 def extract_all_zip_images(zip_names: list[str], use_github_fallback: bool = True) -> list[str]:
     EXTRACTED_IMG_DIR.mkdir(parents=True, exist_ok=True)
@@ -347,7 +349,7 @@ def _image_to_data_uri(img_path: str) -> str | None:
     return f"data:{mime_type};base64,{encoded}"
 
 
-def render_auto_scrolling_gallery(image_paths: list[str]):
+def render_auto_scrolling_gallery(image_paths: list[str], seconds_per_image: float = 3.6):
     valid_uris = []
     for path in image_paths:
         uri = _image_to_data_uri(path)
@@ -358,6 +360,9 @@ def render_auto_scrolling_gallery(image_paths: list[str]):
         st.info("No images extracted yet. Keep the ZIP files inside `Images/` or push them to GitHub `Images/`.")
         return
 
+    # Each image gets at least ~3.6s of scroll budget across the full cycle
+    total_duration_sec = max(len(valid_uris) * seconds_per_image, 12.0)
+
     # Duplicate list so the horizontal scroll loops seamlessly without a gap
     loop_items = valid_uris + valid_uris
     cards_html = "".join(
@@ -367,8 +372,8 @@ def render_auto_scrolling_gallery(image_paths: list[str]):
 
     st.markdown(
         f"""
-        <div class="auto-scroll-wrapper" aria-label="Auto-scrolling gallery from ZIP archives">
-            <div class="auto-scroll-track">
+        <div class="auto-scroll-wrapper" aria-label="Slow auto-scrolling gallery from ZIP archives">
+            <div class="auto-scroll-track" style="animation-duration: {total_duration_sec:.1f}s;">
                 {cards_html}
             </div>
         </div>
@@ -377,7 +382,7 @@ def render_auto_scrolling_gallery(image_paths: list[str]):
     )
 
 
-# --- 5. WEBSITE DATA (NO SEPARATE IMAGE ASSIGNMENTS NEEDED) ---
+# --- 5. WEBSITE DATA ---
 COMMITTEE_MEMBERS = [
     {"role": "President", "name": "Dr. Anirban Sen", "email": "president@alumniassoc.org"},
     {"role": "Vice President", "name": "Smt. Gargi Mukherjee", "email": "vp@alumniassoc.org"},
@@ -498,7 +503,7 @@ def render_footer():
 # --- 7. PAGES ---
 if page == "Cover Page":
     render_zoo_divider("Live ZIP Gallery Auto-Scroll")
-    render_auto_scrolling_gallery(all_extracted_imgs)
+    render_auto_scrolling_gallery(all_extracted_imgs, seconds_per_image=3.6)
 
     render_zoo_divider("Who Are We & Our Vision")
     c1, c2 = st.columns(2)
