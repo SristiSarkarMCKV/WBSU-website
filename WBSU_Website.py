@@ -11,6 +11,7 @@ st.set_page_config(
     page_title="WBSU Alumni Association — Zoology",
     page_icon="🦋",
     layout="wide",
+    initial_sidebar_state="collapsed",
 )
 
 # --- 1. REPO & FILE PATHS ---
@@ -28,44 +29,102 @@ ZIP_FILENAMES = [
 GITHUB_RAW_ZIP_BASE = "https://raw.githubusercontent.com/SristiSarkarMCKV/WBSU-website/main/Images"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
-# --- 2. BLUE-TINT + DEVICE LIGHT/DARK + ZOOLOGY & AUTO-SCROLL ANIMATIONS ---
+# --- 2. THEME VARIABLES (LIGHT DEFAULT + DARK MODE ADAPTIVE) ---
 st.markdown(
     """
     <style>
         :root {
-            --bg-tint: #eef5fc;
             --bg-gradient: radial-gradient(circle at 12% 15%, #dcebfa 0%, #eef5fc 48%, #e4effb 100%);
-            --card-bg: rgba(247, 250, 255, 0.94);
+            --card-bg: rgba(247, 250, 255, 0.95);
             --card-border: #b8d4f0;
+            --contact-bg: rgba(214, 234, 252, 0.96);
+            --contact-border: #6ba3d6;
+            --contact-accent: #0f4c81;
             --text-main: #0f2942;
-            --text-muted: #3b5b7a;
+            --text-muted: #35587a;
             --accent: #1d5fa7;
             --accent-soft: #dcebfa;
+            --menu-bg: #123c69;
+            --menu-hover: #1d5fa7;
+            --menu-text: #f3f9ff;
             --banner-grad: linear-gradient(120deg, #0d2b4d 0%, #174b82 55%, #1f68b0 100%);
             --shadow-soft: 0 8px 24px rgba(15, 41, 66, 0.08);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-tint: #091320;
                 --bg-gradient: radial-gradient(circle at 15% 12%, #112742 0%, #091320 52%, #07101b 100%);
-                --card-bg: rgba(16, 33, 54, 0.92);
+                --card-bg: rgba(16, 33, 54, 0.94);
                 --card-border: #23466d;
-                --text-main: #e6f1fc;
-                --text-muted: #9ec0e0;
+                --contact-bg: rgba(13, 41, 68, 0.96);
+                --contact-border: #3b7ab8;
+                --contact-accent: #7cc4fa;
+                --text-main: #e8f3ff;
+                --text-muted: #a6c7e6;
                 --accent: #58a6ff;
                 --accent-soft: #173252;
+                --menu-bg: #184270;
+                --menu-hover: #255d9c;
+                --menu-text: #eef6ff;
                 --banner-grad: linear-gradient(120deg, #071628 0%, #102d4e 55%, #184270 100%);
-                --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.35);
+                --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.38);
             }
         }
 
-        .stApp {
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-main);
+        /* Hide default Streamlit sidebar so top-right menu controls navigation cleanly */
+        [data-testid="stSidebar"],
+        [data-testid="stSidebarCollapseButton"] {
+            display: none !important;
         }
 
+        .stApp,
+        [data-testid="stAppViewContainer"],
+        [data-testid="stHeader"] {
+            background: var(--bg-gradient) !important;
+            color: var(--text-main) !important;
+        }
+
+        [data-testid="stMarkdownContainer"] p,
+        [data-testid="stMarkdownContainer"] li,
+        [data-testid="stMarkdownContainer"] h1,
+        [data-testid="stMarkdownContainer"] h2,
+        [data-testid="stMarkdownContainer"] h3,
+        [data-testid="stMarkdownContainer"] h4,
+        [data-testid="stMarkdownContainer"] span,
+        [data-testid="stMarkdownContainer"] strong,
+        [data-testid="stWidgetLabel"] label,
+        [data-testid="stRadio"] label p,
+        [data-testid="stCaptionContainer"] {
+            color: var(--text-main) !important;
+        }
+
+        /* Top-right menu panel & buttons */
+        .top-right-nav-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        div[data-testid="stButton"] > button {
+            background-color: var(--menu-bg) !important;
+            color: var(--menu-text) !important;
+            border: 1px solid var(--card-border) !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.04em !important;
+            padding: 0.45rem 0.9rem !important;
+            transition: transform 0.2s ease, background-color 0.2s ease !important;
+        }
+
+        div[data-testid="stButton"] > button:hover {
+            background-color: var(--menu-hover) !important;
+            transform: translateY(-1px);
+        }
+
+        /* Zoology & Auto-Scroll Animations */
         @keyframes floatSpecimen {
             0%, 100% {
                 transform: translateY(0px) rotate(0deg);
@@ -97,7 +156,6 @@ st.markdown(
             }
         }
 
-        /* Continuous slow horizontal auto-scroll across the screen */
         @keyframes scrollAcrossScreen {
             0% {
                 transform: translateX(0%);
@@ -108,7 +166,7 @@ st.markdown(
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .zoo-float, .zoo-pulse, .blue-card, .top-nav-banner, .auto-scroll-track {
+            .zoo-float, .zoo-pulse, .blue-card, .contact-card, .top-nav-banner, .auto-scroll-track {
                 animation: none !important;
                 transition: none !important;
             }
@@ -204,25 +262,52 @@ st.markdown(
         }
 
         .blue-card h3,
-        .blue-card strong {
-            color: var(--text-main);
+        .blue-card strong,
+        .blue-card p {
+            color: var(--text-main) !important;
+            line-height: 1.65;
         }
 
         .blue-card p {
-            color: var(--text-main);
-            line-height: 1.65;
             margin-bottom: 0;
         }
 
+        /* Distinct colour styling for the Contact section */
+        .contact-card {
+            background-color: var(--contact-bg);
+            border: 1.5px solid var(--contact-border);
+            border-top: 5px solid var(--contact-accent);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            color: var(--text-main);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+            animation: fadeSlideUp 0.45s ease-out both;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--contact-accent);
+        }
+
+        .contact-title {
+            color: var(--contact-accent) !important;
+            font-weight: 800;
+            font-size: 1.02rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
         .muted-text {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            color: var(--text-muted) !important;
+            font-size: 0.92rem;
         }
 
         .role-badge {
             display: inline-block;
             background-color: var(--accent-soft);
-            color: var(--accent);
+            color: var(--accent) !important;
             font-weight: 700;
             font-size: 0.76rem;
             letter-spacing: 0.03em;
@@ -296,7 +381,7 @@ def render_zoo_divider(label: str):
 
 
 # --- 4. ZIP EXTRACTION & SLOW AUTO-SCROLL STRIP ---
-@st.cache_data(show_spinner="Extracting images from all ZIP archives...")
+@st.cache_data(show_spinner="Extracting images from ZIP archives...")
 def extract_all_zip_images(zip_names: list[str], use_github_fallback: bool = True) -> list[str]:
     EXTRACTED_IMG_DIR.mkdir(parents=True, exist_ok=True)
     found_images: list[str] = []
@@ -360,10 +445,7 @@ def render_auto_scrolling_gallery(image_paths: list[str], seconds_per_image: flo
         st.info("No images extracted yet. Keep the ZIP files inside `Images/` or push them to GitHub `Images/`.")
         return
 
-    # Each image gets at least ~3.6s of scroll budget across the full cycle
     total_duration_sec = max(len(valid_uris) * seconds_per_image, 12.0)
-
-    # Duplicate list so the horizontal scroll loops seamlessly without a gap
     loop_items = valid_uris + valid_uris
     cards_html = "".join(
         f'<div class="scroll-slide-card"><img src="{uri}" alt="{name}" title="{name}"/></div>'
@@ -451,7 +533,36 @@ CONTACT_INFO = {
     "email": "contact@alumniassoc.org",
 }
 
-# --- 6. HEADER & NAVIGATION ---
+# --- 6. TOP-RIGHT EXPANDABLE / RETRACTABLE MENU ---
+if "menu_expanded" not in st.session_state:
+    st.session_state.menu_expanded = False
+
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "Cover Page"
+
+top_spacer, top_menu_col = st.columns([5.5, 2.5])
+with top_menu_col:
+    btn_label = "MENU>" if st.session_state.menu_expanded else "<MENU "
+    if st.button(btn_label, key="menu_toggle_btn", use_container_width=True):
+        st.session_state.menu_expanded = not st.session_state.menu_expanded
+        st.rerun()
+
+    if st.session_state.menu_expanded:
+        st.markdown('<div class="top-right-nav-box">', unsafe_allow_html=True)
+        selected_page = st.radio(
+            "Navigate",
+            ["Cover Page", "Alumni Corner", "Events", "Support Us"],
+            index=["Cover Page", "Alumni Corner", "Events", "Support Us"].index(st.session_state.current_page),
+            key="top_right_nav_radio",
+        )
+        if selected_page != st.session_state.current_page:
+            st.session_state.current_page = selected_page
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
+
+page = st.session_state.current_page
+
+# --- 7. BANNER & FOOTER ---
 st.markdown(
     f"""
     <div class="top-nav-banner">
@@ -465,15 +576,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.sidebar.title("Navigation")
-page = st.sidebar.radio(
-    "Go to",
-    ["Cover Page", "Alumni Corner", "Events", "Support Us"],
-)
-
-use_gh = st.sidebar.checkbox("Fetch ZIPs from GitHub if not in Images/", value=True)
-all_extracted_imgs = extract_all_zip_images(ZIP_FILENAMES, use_github_fallback=use_gh)
-st.sidebar.caption(f"Total ZIP images auto-scrolling: {len(all_extracted_imgs)}")
+all_extracted_imgs = extract_all_zip_images(ZIP_FILENAMES, use_github_fallback=True)
 
 
 def render_footer():
@@ -481,26 +584,32 @@ def render_footer():
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown(
-            '<div class="blue-card"><strong>Zoology Alumni Association</strong><br>'
-            '<span class="muted-text">Uniting past, present, and future generations of naturalists &amp; scholars.</span></div>',
+            '<div class="contact-card">'
+            '<span class="contact-title">Zoology Alumni Association</span>'
+            '<span class="muted-text">Uniting past, present, and future generations of naturalists &amp; scholars.</span>'
+            "</div>",
             unsafe_allow_html=True,
         )
     with c2:
         st.markdown(
-            f'<div class="blue-card"><strong>Address</strong><br>'
-            f'<span class="muted-text">{CONTACT_INFO["address"]}</span></div>',
+            f'<div class="contact-card">'
+            f'<span class="contact-title">Address</span>'
+            f'<span class="muted-text">{CONTACT_INFO["address"]}</span>'
+            f"</div>",
             unsafe_allow_html=True,
         )
     with c3:
         st.markdown(
-            f'<div class="blue-card"><strong>Contact</strong><br>'
+            f'<div class="contact-card">'
+            f'<span class="contact-title">Contact</span>'
             f'<span class="muted-text">Email: {CONTACT_INFO["email"]}<br>'
-            f'Phone: {CONTACT_INFO["phone"]}</span></div>',
+            f'Phone: {CONTACT_INFO["phone"]}</span>'
+            f"</div>",
             unsafe_allow_html=True,
         )
 
 
-# --- 7. PAGES ---
+# --- 8. PAGES ---
 if page == "Cover Page":
     render_zoo_divider("Live ZIP Gallery Auto-Scroll")
     render_auto_scrolling_gallery(all_extracted_imgs, seconds_per_image=3.6)
